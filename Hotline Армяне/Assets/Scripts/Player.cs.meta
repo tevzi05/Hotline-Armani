@@ -1,2 +1,13 @@
 fileFormatVersion: 2
 guid: 2dca231f45e431249ad88e08a1ea28d9
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - GunAK: {fileID: 3336384918651075896, guid: 4ddaafb01215c3b468e5412bb6b34897, type: 3}
+  - activeWeapon: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
