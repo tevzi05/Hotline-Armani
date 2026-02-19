@@ -4,5 +4,9 @@ using System.Collections.Generic;
 
 public class Test : MonoBehaviour
 {
-    
+    private void Update()
+    {
+        Debug.Log("Ghbdtn");
+    }
+
 }

@@ -18,6 +18,10 @@ public class PlayerAnimation : MonoBehaviour
 
     private void Update()
     {
+        // «‡˘ËÚ‡ ÓÚ null
+        if (Player.Instance == null || GameInput.Instance == null) return;
+        if (animator == null || spriteRenderer == null) return;   // ›“” —“–Œ ” ƒŒ¡¿¬»“‹
+
         animator.SetBool(IS_RUNNING, Player.Instance.IsRunning());
         animator.SetBool(HAS_WEAPON, Player.Instance.HasWeapon());
         AdjustPlayerFacingDirection();
@@ -25,6 +29,8 @@ public class PlayerAnimation : MonoBehaviour
 
     private void AdjustPlayerFacingDirection()
     {
+        if (GameInput.Instance == null) return;
+
         Vector3 mousePos = GameInput.Instance.GetMousePosition();
 
         Vector3 direction = mousePos - transform.position;
