@@ -38,31 +38,50 @@ public class Player : MonoBehaviour
     private void FixedUpdate()
     {
         // ƒвижение
+        if (GameInput.Instance == null) return; // <-- добавить эту строку
+        if (rb == null) return; // добавить эту строку
+
         Vector2 input = GameInput.Instance.GetMovementVector().normalized;
         rb.MovePosition(rb.position + input * (Time.fixedDeltaTime * movingSpeed));
         isRunning = input.magnitude > 0.1f;
     }
 
-    private void LateUpdate() // »спользуем LateUpdate дл€ плавности
+    private void LateUpdate()
     {
-        if (hasWeapon)
-        {
-            // ѕолучаем позицию мыши в мировых координатах
-            Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            mousePos.z = 0; // ќбнул€ем Z
+        if (!hasWeapon) return;               // если нет оружи€ Ц выход
+        if (GameInput.Instance == null) return; // защита от null
+        if (firePoint == null) return;         // добавить проверку на firePoint
 
-            // ¬ычисл€ем направление от игрока к мыши
-            Vector3 direction = mousePos - transform.position;
+        Vector3 mousePos = GameInput.Instance.GetMousePosition();
+        // mousePos.z = 0; // убрали, так как GetMousePosition уже возвращает Z=0
 
-            // ¬ычисл€ем угол поворота
-            float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-
-            // ѕоворачиваем FirePoint
-            firePoint.rotation = Quaternion.Euler(0, 0, angle);
-
-            // ќтражаем спрайт персонажа в зависимости от направлени€
-        }
+        Vector3 direction = mousePos - transform.position;
+        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+        firePoint.rotation = Quaternion.Euler(0, 0, angle);
     }
+
+    //private void LateUpdate() // »спользуем LateUpdate дл€ плавности
+    //{
+    //    if (hasWeapon)
+
+    //    if (GameInput.Instance == null) return; // <-- добавить эту строку
+
+    //    // ѕолучаем позицию мыши в мировых координатах
+    //    Vector3 mousePos = GameInput.Instance.GetMousePosition();
+    //        //mousePos.z = 0; // ќбнул€ем Z
+
+    //    // ¬ычисл€ем направление от игрока к мыши
+    //    Vector3 direction = mousePos - transform.position;
+
+    //    // ¬ычисл€ем угол поворота
+    //    float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+
+    //    // ѕоворачиваем FirePoint
+    //    firePoint.rotation = Quaternion.Euler(0, 0, angle);
+
+    //    // ќтражаем спрайт персонажа в зависимости от направлени€
+
+    //}
     private void Shoot()
     {
         Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
