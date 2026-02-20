@@ -9,22 +9,49 @@ public class Player : MonoBehaviour
     [SerializeField] private float movingSpeed = 15f;
     private Rigidbody2D rb;
     private bool isRunning = false;
-    
+
     [Header("Weapon")]
     private bool hasWeapon = false;
-    
+
+
+
     [Header("Shooting")]
     [SerializeField] private Transform firePoint;    // Куда перетащить FirePoint
     [SerializeField] private GameObject bulletPrefab; // Префаб пули
     [SerializeField] private float fireRate = 0.5f;
     private float nextFireTime = 0f;
-    
+
+
+    [Header("Health")]
+    [SerializeField] private int maxHealth = 100; // хп персонажа
+    private int currentHealth;
+
     private void Awake()
     {
+        currentHealth = maxHealth; //ДОБАВЛЕНО
+
         Instance = this;
         rb = GetComponent<Rigidbody2D>();
     }
-    
+
+    //ДОБАВЛЕНО
+    public void TakeDamage(int damage)
+    {
+        currentHealth -= damage;
+        Debug.Log($"Player health: {currentHealth}");
+        if (currentHealth <= 0)
+        {
+            Die();
+        }
+    }
+
+    private void Die()
+    {
+        Debug.Log("Player died");
+        gameObject.SetActive(false); // или перезапуск сцены
+    }
+    //КОНЕЦ
+
     private void Update()
     {
         // Стрельба
