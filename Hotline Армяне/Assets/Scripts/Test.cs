@@ -6,7 +6,7 @@ public class Test : MonoBehaviour
 {
     private void Update()
     {
-        Debug.Log("Ghbdtn");
+        Debug.Log("Hi");
     }
 
 }
