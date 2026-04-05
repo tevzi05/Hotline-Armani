@@ -1,2 +1,12 @@
 fileFormatVersion: 2
 guid: 4e9fdcdd14f9d814e95f9f34884b2719
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - zombiePrefab: {fileID: 5823619398447558353, guid: 8bdd65e68324d774bbd09de019199285, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
