@@ -2,38 +2,38 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
-    public float speed = 40f;
-    public int damage = 25; // добавили поле для урона
+    public float speed = 30f;
+    public int damage = 25;
+    private Rigidbody2D rb;
 
     void Start()
     {
-        Destroy(gameObject, 2f); // Самоуничтожение через 2 секунды
-
+        rb = GetComponent<Rigidbody2D>();
+        // Устанавливаем скорость через физику
+        rb.linearVelocity = transform.right * speed;
+        Destroy(gameObject, 2f);
     }
 
-    void Update()
-    {
-        // Движение вперед
-        transform.Translate(Vector3.right * speed * Time.deltaTime);
-    }
+    // Update больше не нужен для движения!
 
     void OnTriggerEnter2D(Collider2D other)
     {
         if (!other.CompareTag("Player"))
         {
-            // Пытаемся получить компонент Zombie на объекте, в который попали
             Zombie zombie = other.GetComponent<Zombie>();
             if (zombie != null)
             {
-                zombie.TakeDamage(damage); // наносим урон зомби
-                Destroy(gameObject);       // пуля исчезает
+                zombie.TakeDamage(damage);
+                Destroy(gameObject);
             }
-            // Если это не зомби и не игрок (например, стена) – тоже уничтожаем пулю
+            else if (other.CompareTag("Wall"))
+            {
+                Destroy(gameObject);
+            }
             else if (!other.CompareTag("Player"))
             {
                 Destroy(gameObject);
             }
-            //Destroy(gameObject); // Уничтожить при попадании
         }
     }
 }

@@ -29,6 +29,7 @@ public class PlayerAnimation : MonoBehaviour
 
     private void AdjustPlayerFacingDirection()
     {
+        if (Time.timeScale == 0) return;
         if (GameInput.Instance == null) return;
 
         Vector3 mousePos = GameInput.Instance.GetMousePosition();

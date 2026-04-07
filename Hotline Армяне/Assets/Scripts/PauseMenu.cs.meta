@@ -1,2 +1,13 @@
 fileFormatVersion: 2
 guid: 1b8094c96dd6eaf4c8ffd4ecd5f4c334
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - pauseGameMenu: {instanceID: 0}
+  - crosshairObject: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

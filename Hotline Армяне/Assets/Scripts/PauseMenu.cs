@@ -1,38 +1,49 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.XR;
 
 public class PauseMenu : MonoBehaviour
 {
     public bool PauseGame;
-    public GameObject pauseGameMenu;
+
+    private GameObject pauseGameMenu;
+    private GameObject crosshair;     
+
+    void Start()
+    {
+        //Ищем меню по имени объекта в иерархии
+        Transform menuTransform = transform.Find("PauseMenu");
+        if (menuTransform != null) pauseGameMenu = menuTransform.gameObject;
+        crosshair = GameObject.FindGameObjectWithTag("Crosshair");
+
+    }
+
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            Debug.Log("Нажал");
-            if (PauseGame)
-            {
-                Resume();
-            }
-            else
-            {
-                Pause();
-            }
+            if (PauseGame) Resume();
+            else Pause();
         }
     }
 
     public void Resume()
     {
-        pauseGameMenu.SetActive(false);
+        if (pauseGameMenu != null) pauseGameMenu.SetActive(false);
+        if (crosshair != null) crosshair.SetActive(true); // Включаем прицел 
+
         Time.timeScale = 1f;
-        PauseGame= false;
+        PauseGame = false;
     }
 
     public void Pause()
     {
-        pauseGameMenu.SetActive(true);
+        if (pauseGameMenu != null) pauseGameMenu.SetActive(true);
+        if (crosshair != null) crosshair.SetActive(false); // Выключаем прицел
+
         Time.timeScale = 0;
         PauseGame = true;
+        Cursor.visible = true;
     }
 
     public void LosdMenu()
