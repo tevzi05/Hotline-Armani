@@ -5,9 +5,9 @@ using UnityEngine.XR;
 public class PauseMenu : MonoBehaviour
 {
     public bool PauseGame;
-
+    public AudioSource bgm;
     private GameObject pauseGameMenu;
-    private GameObject crosshair;     
+    private GameObject crosshair;
 
     void Start()
     {
@@ -29,9 +29,10 @@ public class PauseMenu : MonoBehaviour
 
     public void Resume()
     {
+        Debug.Log("Кнопка Resume НАЖАТА!");
         if (pauseGameMenu != null) pauseGameMenu.SetActive(false);
         if (crosshair != null) crosshair.SetActive(true); // Включаем прицел 
-
+        bgm.UnPause();
         Time.timeScale = 1f;
         PauseGame = false;
     }
@@ -40,7 +41,7 @@ public class PauseMenu : MonoBehaviour
     {
         if (pauseGameMenu != null) pauseGameMenu.SetActive(true);
         if (crosshair != null) crosshair.SetActive(false); // Выключаем прицел
-
+        bgm.Pause();
         Time.timeScale = 0;
         PauseGame = true;
         Cursor.visible = true;
