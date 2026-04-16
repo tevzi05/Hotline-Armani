@@ -104,6 +104,12 @@ public class Player : MonoBehaviour
         currentWeaponData = newData;
         hasWeapon = true;
         currentAmmo = newData.maxAmmo;
+        if (weaponAudioSource != null && newData.weaponPickup != null)
+        {
+            // Ставим pitch 1, чтобы звук подбора не был замедленным от прошлой стрельбы
+            weaponAudioSource.pitch = 1f;
+            weaponAudioSource.PlayOneShot(newData.weaponPickup);
+        }
         UpdateAmmoUI();
         Debug.Log($"Equipped: {newData.weaponName}");
     }

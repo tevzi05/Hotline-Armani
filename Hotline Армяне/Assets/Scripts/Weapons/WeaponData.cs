@@ -11,6 +11,7 @@ public class WeaponData : ScriptableObject
     [Header("Audio")]
     public AudioClip shootSound;
     public AudioClip emptySound;
+    public AudioClip weaponPickup;
     public float minPitch = 0.9f;
     public float maxPitch = 1.1f;
 }
