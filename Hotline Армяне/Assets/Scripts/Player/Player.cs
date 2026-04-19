@@ -114,6 +114,20 @@ public class Player : MonoBehaviour
         Debug.Log($"Equipped: {newData.weaponName}");
     }
 
+
+    //днаюбкемн
+    public void AddAmmo(int amount)
+    {
+        if (!hasWeapon || currentWeaponData == null) return;
+
+        int newAmmo = currentAmmo + amount;
+        currentAmmo = Mathf.Min(newAmmo, currentWeaponData.maxAmmo);
+        UpdateAmmoUI();
+
+        Debug.Log($"+{amount} ammo. Now: {currentAmmo}/{currentWeaponData.maxAmmo}");
+    }
+    //врн мхфе сфе ашкн
+
     private void FixedUpdate()
     {
         if (GameInput.Instance == null || rb == null) return;
