@@ -8,6 +8,10 @@ public class WeaponData : ScriptableObject
     public float fireRate = 0.15f;
     public int maxAmmo = 30;
 
+    // —сылка на уникальные анимации дл€ этой пушки
+    [Header("Animations")]
+    public RuntimeAnimatorController weaponOverride;
+
     [Header("Audio")]
     public AudioClip shootSound;
     public AudioClip emptySound;
