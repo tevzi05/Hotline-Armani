@@ -104,15 +104,35 @@ public class Player : MonoBehaviour
         currentWeaponData = newData;
         hasWeapon = true;
         currentAmmo = newData.maxAmmo;
+
+        // СМЕНА АНИМАЦИЙ:
+        Animator anim = GetComponentInChildren<Animator>();
+        if (anim != null && newData.weaponOverride != null)
+        {
+            anim.runtimeAnimatorController = newData.weaponOverride;
+        }
+
         if (weaponAudioSource != null && newData.weaponPickup != null)
         {
-            // Ставим pitch 1, чтобы звук подбора не был замедленным от прошлой стрельбы
             weaponAudioSource.pitch = 1f;
             weaponAudioSource.PlayOneShot(newData.weaponPickup);
         }
         UpdateAmmoUI();
-        Debug.Log($"Equipped: {newData.weaponName}");
     }
+
+
+    //ДОБАВЛЕНО
+    public void AddAmmo(int amount)
+    {
+        if (!hasWeapon || currentWeaponData == null) return;
+
+        int newAmmo = currentAmmo + amount;
+        currentAmmo = Mathf.Min(newAmmo, currentWeaponData.maxAmmo);
+        UpdateAmmoUI();
+
+        Debug.Log($"+{amount} ammo. Now: {currentAmmo}/{currentWeaponData.maxAmmo}");
+    }
+    //ЧТО НИЖЕ УЖЕ БЫЛО
 
     private void FixedUpdate()
     {

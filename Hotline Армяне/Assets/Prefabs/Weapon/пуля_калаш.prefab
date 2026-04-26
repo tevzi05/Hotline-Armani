@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: -5762734131176384930}
   - component: {fileID: -3789333773620209201}
   - component: {fileID: 4222097389776060357}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: "\u043F\u0443\u043B\u044F_\u043A\u0430\u043B\u0430\u0448"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -170,4 +170,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Bullet
   speed: 25
-  damage: 25
+  damage: 10

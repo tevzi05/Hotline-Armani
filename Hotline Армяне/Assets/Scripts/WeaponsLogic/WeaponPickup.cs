@@ -13,7 +13,7 @@ public class WeaponPickup : MonoBehaviour
             Player player = other.GetComponent<Player>();
 
             // Если игрок найден и у него еще нет оружия (или хочешь заменить текущее)
-            if (player != null && !player.HasWeapon())
+            if (player != null) //&& !player.HasWeapon())
             {
                 AudioSource playerSource = other.GetComponent<AudioSource>();
                 if (playerSource != null && pickupSound != null)
