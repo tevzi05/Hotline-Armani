@@ -15,7 +15,7 @@ MonoBehaviour:
   weaponName: AK47
   bulletPrefab: {fileID: 8217795288768993295, guid: 89fde18eaa53c2543ab9bb3219195fef, type: 3}
   fireRate: 0.08
-  maxAmmo: 30
+  maxAmmo: 500
   weaponOverride: {fileID: 9100000, guid: 4844a8379cd7c134b966a8acb227058b, type: 2}
   shootSound: {fileID: 8300000, guid: 7145719ef79945d43b09cab5160f570f, type: 3}
   emptySound: {fileID: 8300000, guid: 54d8a473fdad0074aa61b8c32a5e56f7, type: 3}

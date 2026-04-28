@@ -43,13 +43,13 @@ public class Player : MonoBehaviour
     private void Update()
     {
         if (Time.timeScale == 0) return;
-
         // Ввод движения
         if (GameInput.Instance != null)
             moveDirection = GameInput.Instance.GetMovementVector().normalized;
 
         // Логика стрельбы
         HandleShooting();
+
     }
 
     private void HandleShooting()
@@ -120,8 +120,6 @@ public class Player : MonoBehaviour
         UpdateAmmoUI();
     }
 
-
-    //ДОБАВЛЕНО
     public void AddAmmo(int amount)
     {
         if (!hasWeapon || currentWeaponData == null) return;
@@ -132,7 +130,6 @@ public class Player : MonoBehaviour
 
         Debug.Log($"+{amount} ammo. Now: {currentAmmo}/{currentWeaponData.maxAmmo}");
     }
-    //ЧТО НИЖЕ УЖЕ БЫЛО
 
     private void FixedUpdate()
     {
@@ -189,6 +186,13 @@ public class Player : MonoBehaviour
 
     private void Die()
     {
+        // Оповещаем менеджер
+        if (RestartManager.Instance != null)
+        {
+            RestartManager.Instance.ShowDeathScreen();
+        }
+
+        // Выключаем игрока
         gameObject.SetActive(false);
     }
 }

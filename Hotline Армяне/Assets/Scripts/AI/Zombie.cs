@@ -4,8 +4,6 @@ using Pathfinding;
 
 public class Zombie : MonoBehaviour
 {
-    // [Header("Movement")] 
-    // public float speed = 2f; // Эту скорость теперь настраивай в компоненте AIPath
 
     [Header("Health")]
     public int maxHealth = 1;
@@ -16,11 +14,20 @@ public class Zombie : MonoBehaviour
     public float attackCooldown = 1f;
     private float lastAttackTime;
 
+    [Header("Points")]
+    public int points = 100;
+
     private Transform player;
 
     private void Start()
     {
         currentHealth = maxHealth;
+        GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
+        if (playerObj != null)
+        {
+            // Принудительно отдаем трансформ игрока в навигацию клона
+            GetComponent<AIDestinationSetter>().target = playerObj.transform;
+        }
         player = GameObject.FindGameObjectWithTag("Player")?.transform;
 
         // Автоматически находим игрока и подставляем его в навигацию
@@ -35,7 +42,6 @@ public class Zombie : MonoBehaviour
     {
         if (other.CompareTag("Player") && Time.time > lastAttackTime + attackCooldown)
         {
-            // Используй GetComponent<ваше_имя_скрипта_игрока>
             Player playerHealth = other.GetComponent<Player>();
             if (playerHealth != null)
             {
@@ -50,6 +56,10 @@ public class Zombie : MonoBehaviour
         currentHealth -= damage;
         if (currentHealth <= 0)
         {
+            if (RestartManager.Instance != null)
+            {
+                RestartManager.Instance.AddPoints(100);
+            }
             Destroy(gameObject);
         }
     }
