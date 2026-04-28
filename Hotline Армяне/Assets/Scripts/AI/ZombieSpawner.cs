@@ -1,31 +1,39 @@
-//using UnityEngine;
+using UnityEngine;
 
-//public class ZombieSpawner : MonoBehaviour
-//{
-//    public GameObject zombiePrefab;
-//    public float spawnInterval = 2f;
-//    public float spawnRadius = 5f;
+public class ZombieSpawner : MonoBehaviour
+{
+    public GameObject zombiePrefab;
+    public float spawnInterval = 2f;
 
-//    private Transform player;
-//    private float timer;
+    [Header("Точки спавна")]
+    public Transform[] spawnPoints;
 
-//    private void Start()
-//    {
-//        player = GameObject.FindGameObjectWithTag("Player")?.transform;
-//        timer = spawnInterval;
-//    }
+    private float timer;
 
-//    private void Update()
-//    {
-//        if (player == null) return;
+    private void Start()
+    {
+        timer = spawnInterval;
+    }
 
-//        timer -= Time.deltaTime;
-//        if (timer <= 0)
-//        {
-//            Vector2 offset = Random.insideUnitCircle * spawnRadius;
-//            Vector3 spawnPos = player.position + new Vector3(offset.x, offset.y, 0);
-//            Instantiate(zombiePrefab, spawnPos, Quaternion.identity);
-//            timer = spawnInterval;
-//        }
-//    }
-//}
+    private void Update()
+    {
+        if (spawnPoints.Length == 0) return;
+
+        timer -= Time.deltaTime;
+        if (timer <= 0)
+        {
+            SpawnAtPoint();
+            timer = spawnInterval;
+        }
+    }
+
+    private void SpawnAtPoint()
+    {
+        // Выбираем случайную точку в списке
+        int index = Random.Range(0, spawnPoints.Length);
+        Transform point = spawnPoints[index];
+
+        // Создаем зомби ровно в этой точке
+        Instantiate(zombiePrefab, point.position, Quaternion.identity);
+    }
+}
