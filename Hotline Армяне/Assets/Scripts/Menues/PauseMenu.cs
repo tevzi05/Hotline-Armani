@@ -33,40 +33,36 @@ public class PauseMenu : MonoBehaviour
 
     public void Pause()
     {
-        if (bgm != null)
-        {
-            bgm.pitch = 0.6f;
-            bgm.volume = originalVolume * 0.3f;
-        }
+        if (MusicController.Instance != null) MusicController.Instance.SetMuffled(true);
+
         Time.timeScale = 0;
         if (pauseGameMenu != null) pauseGameMenu.SetActive(true);
-        if (crosshair != null) crosshair.SetActive(false); // Выключаем прицел
+        if (crosshair != null) crosshair.SetActive(false);
         PauseGame = true;
         Cursor.visible = true;
     }
 
     public void Resume()
     {
-        if (pauseGameMenu != null) pauseGameMenu.SetActive(false);
-        if (crosshair != null) crosshair.SetActive(true); // Включаем прицел
-        if (bgm != null)
-        {
-            bgm.pitch = 1f;
-            bgm.volume = originalVolume;
-        }
+        if (MusicController.Instance != null) MusicController.Instance.SetMuffled(false);
+
         Time.timeScale = 1f;
+        if (pauseGameMenu != null) pauseGameMenu.SetActive(false);
+        if (crosshair != null) crosshair.SetActive(true);
         PauseGame = false;
     }
 
     public void Restart()
     {
         Time.timeScale = 1f;
+        if (MusicController.Instance != null) MusicController.Instance.RestartMusic();
         SceneManager.LoadScene("SampleScene");
     }
 
     public void LosdMenu()
     {
         Time.timeScale = 1f;
+        if (MusicController.Instance != null) MusicController.Instance.StopMusic();
         SceneManager.LoadScene("Menu");
     }
 }
