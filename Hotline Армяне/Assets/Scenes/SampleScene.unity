@@ -1670,6 +1670,7 @@ GameObject:
   - component: {fileID: 519420029}
   - component: {fileID: 519420030}
   - component: {fileID: 519420033}
+  - component: {fileID: 519420034}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -1747,7 +1748,7 @@ Camera:
   m_ShutterSpeed: 0.005
   m_Aperture: 16
   m_FocusDistance: 10
-  m_FocalLength: 13.858139
+  m_FocalLength: 6.7136364
   m_BladeCount: 5
   m_Curvature: {x: 2, y: 11}
   m_BarrelClipping: 0.25
@@ -1827,6 +1828,56 @@ MonoBehaviour:
       m_PostInfinity: 2
       m_RotationOrder: 4
   CustomBlends: {fileID: 0}
+--- !u!114 &519420034
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 519420028}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86832f84a0cf34eb9b89129d49b7a15e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BrewedInk.CRT.CRTCameraBehaviour
+  startConfig: {fileID: 11400000, guid: 6a4cfee667ae5420fbc0ff45d34bb1d5, type: 2}
+  crtRenderSettings: {fileID: 11400000, guid: 2d929546960894d169f1999a321e4ff4, type: 2}
+  _runtimeMaterial: {fileID: 0}
+  data:
+    pixelationAmount: 0
+    maxColorChannels:
+      red: 0
+      green: 0
+      blue: 0
+      greyScale: 0
+    dithering4: 0
+    dithering8: 0
+    vignette: 0.292
+    innerCurve: 20
+    monitorCurve: 0.038
+    monitorInnerSize:
+      width: 0
+      height: 0
+    monitorOutterSize:
+      width: 0.1
+      height: 0.1
+    zoom: 1.19
+    monitorRoundness: 0.2
+    monitorTexture: {fileID: 0}
+    monitorColor:
+      r: 0.121796034
+      g: 0.12775578
+      b: 0.16037738
+      a: 1
+    innerMonitorDarkness: 0.215
+    innerMonitorShine: 0.01
+    colorScans:
+      greenChannelMultiplier: -0.355
+      redBlueChannelMultiplier: -0.334
+      sizeMultiplier: 3.06
+    innerMonitorShineRadius: -0.087
+    innerMonitorShineCurve: 10
+  lastValidationId: 9a6d2c46-0f65-4912-b78b-738ecc0e7a18
 --- !u!1 &537941013
 GameObject:
   m_ObjectHideFlags: 0
@@ -2803,8 +2854,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -70.41, y: -39.7877}
-  m_SizeDelta: {x: 25, y: 25}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 7, y: 7}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &955366027
 MonoBehaviour:
@@ -4021,6 +4072,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1345350478}
   - component: {fileID: 1345350477}
+  - component: {fileID: 1345350479}
   m_Layer: 0
   m_Name: Brightness
   m_TagString: Untagged
@@ -4060,6 +4112,22 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1345350479
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1345350476}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce48881ef21bc984d90f09d046498dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerSettings
+  volumeSlider: {fileID: 1488478167}
+  brightnessSlider: {fileID: 1364921622}
+  globalVolume: {fileID: 1345350477}
+  bgmSource: {fileID: 1174484919}
 --- !u!1 &1353407421
 GameObject:
   m_ObjectHideFlags: 0
@@ -11982,6 +12050,7 @@ GameObject:
   - component: {fileID: 1364921620}
   - component: {fileID: 1364921622}
   - component: {fileID: 1364921621}
+  - component: {fileID: 1364921623}
   m_Layer: 5
   m_Name: BrightnessSlider
   m_TagString: Untagged
@@ -12069,12 +12138,40 @@ MonoBehaviour:
   m_HandleRect: {fileID: 0}
   m_Direction: 0
   m_MinValue: 0
-  m_MaxValue: 10
-  m_WholeNumbers: 1
-  m_Value: 5
+  m_MaxValue: 1
+  m_WholeNumbers: 0
+  m_Value: 1
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1345350479}
+        m_TargetAssemblyTypeName: PlayerSettings, Assembly-CSharp
+        m_MethodName: SaveBrightness
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &1364921623
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1364921619}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce48881ef21bc984d90f09d046498dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerSettings
+  volumeSlider: {fileID: 1488478167}
+  brightnessSlider: {fileID: 1364921622}
+  globalVolume: {fileID: 1345350477}
+  bgmSource: {fileID: 1174484919}
 --- !u!1 &1404594616
 GameObject:
   m_ObjectHideFlags: 0
@@ -12329,6 +12426,7 @@ GameObject:
   - component: {fileID: 1488478165}
   - component: {fileID: 1488478167}
   - component: {fileID: 1488478166}
+  - component: {fileID: 1488478168}
   m_Layer: 5
   m_Name: VolumeSlider
   m_TagString: Untagged
@@ -12446,6 +12544,34 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1488478168}
+        m_TargetAssemblyTypeName: PlayerSettings, Assembly-CSharp
+        m_MethodName: SaveVolume
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &1488478168
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1488478164}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce48881ef21bc984d90f09d046498dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerSettings
+  volumeSlider: {fileID: 1488478167}
+  brightnessSlider: {fileID: 1364921622}
+  globalVolume: {fileID: 1345350477}
+  bgmSource: {fileID: 1174484919}
 --- !u!1 &1496214105
 GameObject:
   m_ObjectHideFlags: 0
@@ -13787,8 +13913,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.000024786, y: 93}
-  m_SizeDelta: {x: 800, y: 151.3841}
+  m_AnchoredPosition: {x: -11.21, y: 93}
+  m_SizeDelta: {x: 1284.99, y: 151.38}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1790988854
 MonoBehaviour:
