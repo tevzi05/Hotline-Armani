@@ -13,7 +13,7 @@ public class MusicController : MonoBehaviour
         DontDestroyOnLoad(gameObject);
 
         audioSource = GetComponent<AudioSource>();
-        defaultVolume = audioSource.volume; // Запоминаем громкость из инспектора
+        defaultVolume = PlayerPrefs.GetFloat("MusicVolume", 0.5f); ; // Запоминаем громкость из инспектора
     }
 
     // Возвращает музыку в нормальное состояние

@@ -1,5 +1,33 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-7426091056232730296
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 899c54efeace73346a0a16faa3afe726, type: 3}
+  m_Name: Vignette
+  m_EditorClassIdentifier: Unity.RenderPipelines.Universal.Runtime::UnityEngine.Rendering.Universal.Vignette
+  active: 1
+  color:
+    m_OverrideState: 1
+    m_Value: {r: 0, g: 0, b: 0, a: 1}
+  center:
+    m_OverrideState: 0
+    m_Value: {x: 0.5, y: 0.5}
+  intensity:
+    m_OverrideState: 1
+    m_Value: 0.301
+  smoothness:
+    m_OverrideState: 1
+    m_Value: 0.213
+  rounded:
+    m_OverrideState: 0
+    m_Value: 0
 --- !u!114 &-1835088996775453756
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -33,6 +61,8 @@ MonoBehaviour:
   - {fileID: 8825846810936268037}
   - {fileID: -1835088996775453756}
   - {fileID: 5616334996680600696}
+  - {fileID: 5374404745563807775}
+  - {fileID: -7426091056232730296}
 --- !u!114 &1559224603425701252
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -48,16 +78,35 @@ MonoBehaviour:
   active: 1
   type:
     m_OverrideState: 1
-    m_Value: 6
+    m_Value: 10
   intensity:
     m_OverrideState: 1
-    m_Value: 1
+    m_Value: 0.25
   response:
     m_OverrideState: 1
-    m_Value: 1
+    m_Value: 0.92
   texture:
     m_OverrideState: 1
-    m_Value: {fileID: 0}
+    m_Value: {fileID: 2800000, guid: 00c666e117d9b2c418b0e117e078fab8, type: 3}
+--- !u!114 &5374404745563807775
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fb60a22f311433c4c962b888d1393f88, type: 3}
+  m_Name: PaniniProjection
+  m_EditorClassIdentifier: Unity.RenderPipelines.Universal.Runtime::UnityEngine.Rendering.Universal.PaniniProjection
+  active: 1
+  distance:
+    m_OverrideState: 1
+    m_Value: 0.044
+  cropToFit:
+    m_OverrideState: 0
+    m_Value: 1
 --- !u!114 &5616334996680600696
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -79,7 +128,7 @@ MonoBehaviour:
     m_Value: 0.9
   intensity:
     m_OverrideState: 1
-    m_Value: 0
+    m_Value: 1
   scatter:
     m_OverrideState: 1
     m_Value: 0.28
@@ -88,7 +137,7 @@ MonoBehaviour:
     m_Value: 65472
   tint:
     m_OverrideState: 1
-    m_Value: {r: 0.8039216, g: 0.5215687, b: 0.2470588, a: 1}
+    m_Value: {r: 0.9, g: 0.9, b: 0.9, a: 1}
   highQualityFiltering:
     m_OverrideState: 1
     m_Value: 1
@@ -126,7 +175,7 @@ MonoBehaviour:
     m_Value: 1
   yMultiplier:
     m_OverrideState: 1
-    m_Value: 0
+    m_Value: 1
   center:
     m_OverrideState: 1
     m_Value: {x: 0.5, y: 0.5}
