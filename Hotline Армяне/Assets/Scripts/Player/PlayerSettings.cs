@@ -16,21 +16,33 @@ public class PlayerSettings : MonoBehaviour
     [Header("Audio")]
     public AudioSource bgmSource;
 
-    void Awake()
+    //void Awake()
+    //{
+
+    //    if (globalVolume != null) globalVolume.profile.TryGet(out _colorAdjustments);
+    //    float savedBrightness = PlayerPrefs.GetFloat("Brightness", 1.0f);
+    //    ApplyBrightnessToScreen(savedBrightness);
+    //    if (brightnessSlider != null) brightnessSlider.value = savedBrightness;
+
+    //    // 5. То же самое для громкости
+    //    float savedVolume = PlayerPrefs.GetFloat("MusicVolume", 0.5f);
+    //    ApplyVolumeToMusic(savedVolume);
+    //    if (volumeSlider != null) volumeSlider.value = savedVolume;
+    //}
+
+    // Start теперь можно оставить пустым или удалить
+    void Start() // Вместо Awake
     {
-        
         if (globalVolume != null) globalVolume.profile.TryGet(out _colorAdjustments);
+
         float savedBrightness = PlayerPrefs.GetFloat("Brightness", 1.0f);
         ApplyBrightnessToScreen(savedBrightness);
         if (brightnessSlider != null) brightnessSlider.value = savedBrightness;
 
-        // 5. То же самое для громкости
         float savedVolume = PlayerPrefs.GetFloat("MusicVolume", 0.5f);
         ApplyVolumeToMusic(savedVolume);
         if (volumeSlider != null) volumeSlider.value = savedVolume;
     }
-
-    // Start теперь можно оставить пустым или удалить
 
 
     public void SaveVolume()
@@ -56,8 +68,19 @@ public class PlayerSettings : MonoBehaviour
     }
     private void ApplyVolumeToMusic(float value)
     {
+        // Вызываем ResetEffects или SetMuffled, чтобы музыка сразу применила новую громкость
+        // Если игра на паузе, то передаем true в SetMuffled, если нет - ResetEffects
+        if (Time.timeScale < 0.1f)
+            MusicController.Instance.SetMuffled(true);
+        else
+            MusicController.Instance.ResetEffects();
+    
+    
+        // 2. На всякий случай обновляем локальный источник
         if (bgmSource != null)
-        bgmSource.volume = value;
+            bgmSource.volume = value;
+            //if (bgmSource != null)
+            //bgmSource.volume = value;
     }
     private void ApplyBrightnessToScreen(float value)
     {
