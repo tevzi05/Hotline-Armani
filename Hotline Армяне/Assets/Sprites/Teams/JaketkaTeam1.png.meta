@@ -1,0 +1,585 @@
+fileFormatVersion: 2
+guid: d0e64f58ac841124b8f98cc19414ef42
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 301266058544807700
+    second: JaketkaTeam1_0
+  - first:
+      213: 4611837069580703780
+    second: JaketkaTeam1_1
+  - first:
+      213: -4428894153929437869
+    second: JaketkaTeam1_2
+  - first:
+      213: -8773340150221982329
+    second: JaketkaTeam1_3
+  - first:
+      213: 5795253356063656328
+    second: JaketkaTeam1_4
+  - first:
+      213: -5519631024381041517
+    second: JaketkaTeam1_5
+  - first:
+      213: 2817371962737499465
+    second: JaketkaTeam1_6
+  - first:
+      213: -506055114640274099
+    second: JaketkaTeam1_7
+  - first:
+      213: 2969963310429720370
+    second: JaketkaTeam1_8
+  - first:
+      213: 7180376085150860687
+    second: JaketkaTeam1_9
+  - first:
+      213: 6220014279495256191
+    second: JaketkaTeam1_10
+  - first:
+      213: 3899211389740463246
+    second: JaketkaTeam1_11
+  - first:
+      213: -2146596984356711776
+    second: JaketkaTeam1_12
+  - first:
+      213: 6997753003215594457
+    second: JaketkaTeam1_13
+  - first:
+      213: -8339589639425180383
+    second: JaketkaTeam1_14
+  - first:
+      213: 5691583076022236534
+    second: JaketkaTeam1_15
+  - first:
+      213: 4727980089391822505
+    second: JaketkaTeam1_16
+  - first:
+      213: -611404579859348658
+    second: JaketkaTeam1_17
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: JaketkaTeam1_0
+      rect:
+        serializedVersion: 2
+        x: 69
+        y: 2209
+        width: 282
+        height: 222
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 41ff17252ef4e2400800000000000000
+      internalID: 301266058544807700
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: JaketkaTeam1_1
+      rect:
+        serializedVersion: 2
+        x: 529
+        y: 2209
+        width: 142
+        height: 222
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 42816565169800040800000000000000
+      internalID: 4611837069580703780
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: JaketkaTeam1_2
+      rect:
+        serializedVersion: 2
+        x: 829
+        y: 2209
+        width: 282
+        height: 222
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 35d4b377b386982c0800000000000000
+      internalID: -4428894153929437869
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: JaketkaTeam1_3
+      rect:
+        serializedVersion: 2
+        x: 139
+        y: 1899
+        width: 352
+        height: 222
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 785b854dd95de3680800000000000000
+      internalID: -8773340150221982329
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: JaketkaTeam1_4
+      rect:
+        serializedVersion: 2
+        x: 629
+        y: 1899
+        width: 432
+        height: 222
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 88980970930ec6050800000000000000
+      internalID: 5795253356063656328
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: JaketkaTeam1_5
+      rect:
+        serializedVersion: 2
+        x: 1119
+        y: 1899
+        width: 432
+        height: 222
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 394ea8cd3d45663b0800000000000000
+      internalID: -5519631024381041517
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: JaketkaTeam1_6
+      rect:
+        serializedVersion: 2
+        x: 139
+        y: 1599
+        width: 272
+        height: 222
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 94d1d1f7fd0591720800000000000000
+      internalID: 2817371962737499465
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: JaketkaTeam1_7
+      rect:
+        serializedVersion: 2
+        x: 629
+        y: 1599
+        width: 352
+        height: 222
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d4dc81fed812af8f0800000000000000
+      internalID: -506055114640274099
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: JaketkaTeam1_8
+      rect:
+        serializedVersion: 2
+        x: 1119
+        y: 1599
+        width: 352
+        height: 222
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 23f4b1235ed673920800000000000000
+      internalID: 2969963310429720370
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: JaketkaTeam1_9
+      rect:
+        serializedVersion: 2
+        x: 139
+        y: 1279
+        width: 292
+        height: 222
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f8580259102d5a360800000000000000
+      internalID: 7180376085150860687
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: JaketkaTeam1_10
+      rect:
+        serializedVersion: 2
+        x: 629
+        y: 1279
+        width: 372
+        height: 222
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f780c2b380ee15650800000000000000
+      internalID: 6220014279495256191
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: JaketkaTeam1_11
+      rect:
+        serializedVersion: 2
+        x: 1119
+        y: 1279
+        width: 372
+        height: 222
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e8433ad9918cc1630800000000000000
+      internalID: 3899211389740463246
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: JaketkaTeam1_12
+      rect:
+        serializedVersion: 2
+        x: 139
+        y: 969
+        width: 332
+        height: 222
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0a25e777a61c532e0800000000000000
+      internalID: -2146596984356711776
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: JaketkaTeam1_13
+      rect:
+        serializedVersion: 2
+        x: 629
+        y: 969
+        width: 412
+        height: 222
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9d3a69ed7430d1160800000000000000
+      internalID: 6997753003215594457
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: JaketkaTeam1_14
+      rect:
+        serializedVersion: 2
+        x: 1119
+        y: 969
+        width: 412
+        height: 222
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 12db8817863d34c80800000000000000
+      internalID: -8339589639425180383
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: JaketkaTeam1_15
+      rect:
+        serializedVersion: 2
+        x: 139
+        y: 679
+        width: 372
+        height: 222
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6753eeff6a09cfe40800000000000000
+      internalID: 5691583076022236534
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: JaketkaTeam1_16
+      rect:
+        serializedVersion: 2
+        x: 629
+        y: 679
+        width: 452
+        height: 222
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9a6b15567d82d9140800000000000000
+      internalID: 4727980089391822505
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: JaketkaTeam1_17
+      rect:
+        serializedVersion: 2
+        x: 1119
+        y: 679
+        width: 452
+        height: 222
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e43cf6326cad387f0800000000000000
+      internalID: -611404579859348658
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      JaketkaTeam1_0: 301266058544807700
+      JaketkaTeam1_1: 4611837069580703780
+      JaketkaTeam1_10: 6220014279495256191
+      JaketkaTeam1_11: 3899211389740463246
+      JaketkaTeam1_12: -2146596984356711776
+      JaketkaTeam1_13: 6997753003215594457
+      JaketkaTeam1_14: -8339589639425180383
+      JaketkaTeam1_15: 5691583076022236534
+      JaketkaTeam1_16: 4727980089391822505
+      JaketkaTeam1_17: -611404579859348658
+      JaketkaTeam1_2: -4428894153929437869
+      JaketkaTeam1_3: -8773340150221982329
+      JaketkaTeam1_4: 5795253356063656328
+      JaketkaTeam1_5: -5519631024381041517
+      JaketkaTeam1_6: 2817371962737499465
+      JaketkaTeam1_7: -506055114640274099
+      JaketkaTeam1_8: 2969963310429720370
+      JaketkaTeam1_9: 7180376085150860687
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
