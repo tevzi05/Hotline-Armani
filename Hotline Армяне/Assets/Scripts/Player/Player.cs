@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 using TMPro;
+using System.Collections;
 
 public class Player : MonoBehaviour
 {
@@ -17,7 +18,13 @@ public class Player : MonoBehaviour
     [SerializeField] private AudioSource weaponAudioSource;
     private bool hasWeapon = false;
     private int currentAmmo;
+    private int ammoReserve;      // Патроны в запасе (кармане)
+    private int magazineSize;
     private float nextFireTime = 0f;
+
+    [Header("Reloading")]
+    public float reloadTime = 1.5f;
+    private bool isReloading = false;
 
     [Header("Setup")]
     [SerializeField] private Transform firePoint;
@@ -29,6 +36,8 @@ public class Player : MonoBehaviour
 
     [Header("UI")]
     [SerializeField] private TextMeshProUGUI ammoText;
+    [SerializeField] private TextMeshProUGUI reloadText;
+
 
     private void Awake()
     {
@@ -44,11 +53,14 @@ public class Player : MonoBehaviour
     {
         if (Time.timeScale == 0) return;
         // Ввод движения
-        if (GameInput.Instance != null)
-            moveDirection = GameInput.Instance.GetMovementVector().normalized;
+        if (GameInput.Instance != null) moveDirection = GameInput.Instance.GetMovementVector().normalized;
 
         // Логика стрельбы
         HandleShooting();
+        if (Input.GetKeyDown(KeyCode.R) && !isReloading && currentAmmo < magazineSize && ammoReserve > 0)
+        {
+            StartCoroutine(Reload());
+        }
 
     }
 
@@ -92,18 +104,21 @@ public class Player : MonoBehaviour
         }
 
         // Расход ресурсов
+        if (isReloading || currentAmmo <= 0) return;
         currentAmmo--;
         nextFireTime = Time.time + currentWeaponData.fireRate;
         UpdateAmmoUI();
     }
 
 
-    // Этот метод вызывается, когда игрок наступает на предмет оружия
+
     public void EquipWeapon(WeaponData newData)
     {
         currentWeaponData = newData;
         hasWeapon = true;
         currentAmmo = newData.maxAmmo;
+        magazineSize = newData.maxAmmo;
+        ammoReserve = newData.maxAmmo;
 
         // СМЕНА АНИМАЦИЙ:
         Animator anim = GetComponentInChildren<Animator>();
@@ -120,15 +135,34 @@ public class Player : MonoBehaviour
         UpdateAmmoUI();
     }
 
-    public void AddAmmo(int amount)
+    public void AddAmmo()
     {
         if (!hasWeapon || currentWeaponData == null) return;
-
-        int newAmmo = currentAmmo + amount;
-        currentAmmo = Mathf.Min(newAmmo, currentWeaponData.maxAmmo);
+        int amount = currentWeaponData.ammoPerKill;
+        ammoReserve += amount;
         UpdateAmmoUI();
 
-        Debug.Log($"+{amount} ammo. Now: {currentAmmo}/{currentWeaponData.maxAmmo}");
+        Debug.Log($"+{amount} ammo. Now: {currentAmmo}/{ammoReserve}");
+    }
+
+    private IEnumerator Reload()
+    {
+        isReloading = true;
+
+        yield return new WaitForSeconds(reloadTime);
+
+        /// Считаем, сколько пуль не хватает в магазине
+        int amountNeeded = magazineSize - currentAmmo;
+
+        // Проверяем, хватает ли нам патронов в запасе
+        int amountToTake = Mathf.Min(amountNeeded, ammoReserve);
+
+        // Перекладываем из запаса в магазин
+        currentAmmo += amountToTake;
+        ammoReserve -= amountToTake;
+
+        UpdateAmmoUI();
+        isReloading = false;
     }
 
     private void FixedUpdate()
@@ -163,11 +197,15 @@ public class Player : MonoBehaviour
         if (ammoText == null) return;
 
         GameObject background = ammoText.transform.parent.gameObject;
+        GameObject backgroundReload = reloadText.transform.parent.gameObject;
 
         if (hasWeapon)
         {
             background.SetActive(true);
-            ammoText.text = currentAmmo > 0 ? $"{currentAmmo}/{currentWeaponData.maxAmmo}" : "No ammo!";
+            if (ammoReserve >= 0) ammoText.text = $"{currentAmmo}/{ammoReserve}";
+            if (ammoReserve == 0 && currentAmmo == 0) ammoText.text = "No ammo!";
+            if (currentAmmo == 0) backgroundReload.SetActive(true);
+            else backgroundReload.SetActive(false);
         }
         else
         {
@@ -195,4 +233,5 @@ public class Player : MonoBehaviour
         // Выключаем игрока
         gameObject.SetActive(false);
     }
+
 }

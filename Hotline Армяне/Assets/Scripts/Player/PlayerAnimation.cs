@@ -20,7 +20,7 @@ public class PlayerAnimation : MonoBehaviour
     {
         // Çàùèòà îò null
         if (Player.Instance == null || GameInput.Instance == null) return;
-        if (animator == null || spriteRenderer == null) return;   // İÒÓ ÑÒĞÎÊÓ ÄÎÁÀÂÈÒÜ
+        if (animator == null || spriteRenderer == null) return;
 
         animator.SetBool(IS_RUNNING, Player.Instance.IsRunning());
         animator.SetBool(HAS_WEAPON, Player.Instance.HasWeapon());

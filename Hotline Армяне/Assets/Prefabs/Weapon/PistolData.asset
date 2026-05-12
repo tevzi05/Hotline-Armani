@@ -16,6 +16,7 @@ MonoBehaviour:
   bulletPrefab: {fileID: 8217795288768993295, guid: 89fde18eaa53c2543ab9bb3219195fef, type: 3}
   fireRate: 0.4
   maxAmmo: 12
+  ammoPerKill: 3
   weaponOverride: {fileID: 22100000, guid: 21fc636ee6f5cbe498ede683239f482f, type: 2}
   shootSound: {fileID: 8300000, guid: 81e7a64da52869947b76a697c98a16da, type: 3}
   emptySound: {fileID: 8300000, guid: 1047d6559e6b599429d651cc24ec97b8, type: 3}
