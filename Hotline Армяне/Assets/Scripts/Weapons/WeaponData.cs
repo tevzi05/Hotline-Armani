@@ -8,6 +8,10 @@ public class WeaponData : ScriptableObject
     public float fireRate = 0.15f;
     public int maxAmmo = 30;
 
+    // Ќќ¬јя ѕ≈–≈ћ≈ЌЌјя: сколько патронов давать за убийство
+    [Header("Economy")]
+    public int ammoPerKill = 5;
+
     // —сылка на уникальные анимации дл€ этой пушки
     [Header("Animations")]
     public RuntimeAnimatorController weaponOverride;
