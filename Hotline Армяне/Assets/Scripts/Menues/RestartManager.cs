@@ -11,6 +11,7 @@ public class RestartManager : MonoBehaviour
     // Переменная для хранения ссылки на объект плашки
     private GameObject deathPanel;
     private bool isPlayerDead = false;
+    private GameObject crosshair;
 
     public static RestartManager Instance { get; private set; }
 
@@ -48,9 +49,11 @@ public class RestartManager : MonoBehaviour
     public void ShowDeathScreen()
     {
         isPlayerDead = true;
+        crosshair = GameObject.FindGameObjectWithTag("Crosshair");
         if (deathPanel != null)
         {
             deathPanel.SetActive(true);
+            crosshair.SetActive(false);
         }
 
     }
