@@ -4,7 +4,6 @@ public class MusicController : MonoBehaviour
 {
     public static MusicController Instance;
     private AudioSource audioSource;
-    private float defaultVolume;
 
     private float CurrentConfigVolume => PlayerPrefs.GetFloat("MusicVolume", 0.5f);
     private void Awake()
