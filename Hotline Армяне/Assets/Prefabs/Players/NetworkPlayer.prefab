@@ -1711,7 +1711,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::NetworkPlayer
   ShowTopMostFoldoutHeaderGroup: 1
-  movingSpeed: 15
+  movingSpeed: 10
   currentWeaponData: {fileID: 0}
   weaponAudioSource: {fileID: 6354539478006744287}
   reloadTime: 1.5
