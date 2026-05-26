@@ -11,6 +11,7 @@ public class MainMenu : MonoBehaviour
         levelSelectPanel.SetActive(true);
 
     }
+
     public void ExitGame()
     {
         Application.Quit();
