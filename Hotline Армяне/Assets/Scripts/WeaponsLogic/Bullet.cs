@@ -1,10 +1,14 @@
 using UnityEngine;
+using Unity.Netcode;  // Добавь, если нет
 
-public class Bullet : MonoBehaviour
+//public class Bullet : MonoBehaviour
+public class Bullet : NetworkBehaviour
 {
     public float speed = 50f;
     public int damage = 25;
+    public ulong ownerNetId; // ID игрока, который выстрелил
     private Rigidbody2D rb;
+    public Team shooterTeam;
 
     void Start()
     {
@@ -16,24 +20,60 @@ public class Bullet : MonoBehaviour
 
     // Update больше не нужен для движения!
 
+    //void OnTriggerEnter2D(Collider2D other)
+    //{
+    //    if (!other.CompareTag("Player"))
+    //    {
+    //        Zombie zombie = other.GetComponent<Zombie>();
+    //        if (zombie != null)
+    //        {
+    //            zombie.TakeDamage(damage);
+    //            Destroy(gameObject);
+    //        }
+    //        else if (other.CompareTag("Wall"))
+    //        {
+    //            Destroy(gameObject);
+    //        }
+    //        else if (!other.CompareTag("Player"))
+    //        {
+    //            Destroy(gameObject);
+    //        }
+    //    }
+    //}
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (!other.CompareTag("Player"))
+        // Попадание по игроку (PvP)
+        NetworkPlayer targetPlayer = other.GetComponent<NetworkPlayer>();
+        if (targetPlayer != null)
         {
-            Zombie zombie = other.GetComponent<Zombie>();
-            if (zombie != null)
+            // Нельзя убить себя
+            if (targetPlayer.OwnerClientId == ownerNetId) return;
+
+            if (targetPlayer.GetTeam() == shooterTeam) return;
+
+            // Наносим урон только на сервере
+            if (IsServer)
             {
-                zombie.TakeDamage(damage);
-                Destroy(gameObject);
+                targetPlayer.TakeDamage(damage, ownerNetId);
             }
-            else if (other.CompareTag("Wall"))
-            {
-                Destroy(gameObject);
-            }
-            else if (!other.CompareTag("Player"))
-            {
-                Destroy(gameObject);
-            }
+            Destroy(gameObject);
+            return;
+        }
+
+        // Остальные коллизии (зомби, стены, и т.д.)
+        Zombie zombie = other.GetComponent<Zombie>();
+        if (zombie != null)
+        {
+            zombie.TakeDamage(damage);
+            Destroy(gameObject);
+        }
+        else if (other.CompareTag("Wall"))
+        {
+            Destroy(gameObject);
+        }
+        else if (!other.CompareTag("Player"))
+        {
+            Destroy(gameObject);
         }
     }
 }
