@@ -20,7 +20,8 @@ public class NetworkPlayer : NetworkBehaviour
     [SerializeField] private AudioSource weaponAudioSource;
     private bool hasWeapon = false;
     private int currentAmmo;
-    private int ammoReserve;
+    //private int ammoReserve;
+    private NetworkVariable<int> ammoReserve = new NetworkVariable<int>(0, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Server);
     private int magazineSize;
     private float nextFireTime = 0f;
 
@@ -35,6 +36,8 @@ public class NetworkPlayer : NetworkBehaviour
     [SerializeField] private int maxHealth = 100;
     // Сетевое здоровье: сервер меняет, все клиенты видят
     private NetworkVariable<int> currentHealth = new NetworkVariable<int>(100, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Server);
+
+    private NetworkVariable<Team> playerTeam = new NetworkVariable<Team>(Team.None, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Server);
 
     [Header("UI (Укажите ссылки прямо в префабе)")]
     [SerializeField] private TextMeshProUGUI ammoText;
@@ -79,7 +82,25 @@ public class NetworkPlayer : NetworkBehaviour
         }
 
         currentHealth.OnValueChanged += OnHealthChanged;
+        if (IsServer)
+        {
+            StartCoroutine(SpawnWithDelay());
+        }
+        //if (IsServer)
+        //{
+        //    if (TeamManager.Instance != null)
+        //    {
+        //        TeamManager.Instance.AssignTeam(this);
+        //        transform.position = TeamManager.Instance.GetSpawnPosition(playerTeam.Value);
+        //        Debug.Log($"Спавн игрока на позиции: {transform.position}"); // Добавьте для проверки
+        //    }
+        //    else
+        //    {
+        //        Debug.LogError("TeamManager.Instance = null!");
+        //    }
+        //}
     }
+
 
     public override void OnNetworkDespawn()
     {
@@ -97,7 +118,7 @@ public class NetworkPlayer : NetworkBehaviour
 
         HandleShooting();
 
-        if (Input.GetKeyDown(KeyCode.R) && !isReloading && currentAmmo < magazineSize && ammoReserve > 0)
+        if (Input.GetKeyDown(KeyCode.R) && !isReloading && currentAmmo < magazineSize && ammoReserve.Value > 0)
         {
             StartCoroutine(Reload());
         }
@@ -132,13 +153,29 @@ public class NetworkPlayer : NetworkBehaviour
     private void ShootServerRpc(Vector3 position, Quaternion rotation)
     {
         GameObject bullet = Instantiate(currentWeaponData.bulletPrefab, position, rotation);
-        // Пуля должна иметь компонент NetworkObject!
+        Bullet bulletScript = bullet.GetComponent<Bullet>();
+        if (bulletScript != null)
+        {
+            bulletScript.ownerNetId = OwnerClientId; // запоминаем, кто стрелял
+            bulletScript.shooterTeam = playerTeam.Value;
+        }
         if (bullet.GetComponent<NetworkObject>() != null)
         {
             bullet.GetComponent<NetworkObject>().Spawn();
         }
         PlayShootSoundClientRpc();
     }
+    //[ServerRpc]
+    //private void ShootServerRpc(Vector3 position, Quaternion rotation)
+    //{
+    //    GameObject bullet = Instantiate(currentWeaponData.bulletPrefab, position, rotation);
+    //    // Пуля должна иметь компонент NetworkObject!
+    //    if (bullet.GetComponent<NetworkObject>() != null)
+    //    {
+    //        bullet.GetComponent<NetworkObject>().Spawn();
+    //    }
+    //    PlayShootSoundClientRpc();
+    //}
 
     [ClientRpc]
     private void PlayShootSoundClientRpc()
@@ -162,9 +199,13 @@ public class NetworkPlayer : NetworkBehaviour
     {
         currentWeaponData = newData;
         hasWeapon = true;
+        //currentAmmo = newData.maxAmmo;
+        //magazineSize = newData.maxAmmo;
+        //ammoReserve = newData.maxAmmo;
         currentAmmo = newData.maxAmmo;
         magazineSize = newData.maxAmmo;
-        ammoReserve = newData.maxAmmo;
+        if (IsServer)
+            ammoReserve.Value = newData.maxAmmo;
 
         Animator anim = GetComponentInChildren<Animator>();
         if (anim != null && newData.weaponOverride != null)
@@ -187,11 +228,15 @@ public class NetworkPlayer : NetworkBehaviour
         isReloading = true;
         yield return new WaitForSeconds(reloadTime);
 
-        int amountNeeded = magazineSize - currentAmmo;
-        int amountToTake = Mathf.Min(amountNeeded, ammoReserve);
+        //int amountNeeded = magazineSize - currentAmmo;
+        //int amountToTake = Mathf.Min(amountNeeded, ammoReserve);
 
+        //currentAmmo += amountToTake;
+        //ammoReserve -= amountToTake;
+        int amountNeeded = magazineSize - currentAmmo;
+        int amountToTake = Mathf.Min(amountNeeded, ammoReserve.Value);
         currentAmmo += amountToTake;
-        ammoReserve -= amountToTake;
+        ammoReserve.Value -= amountToTake;
 
         UpdateAmmoUI();
         isReloading = false;
@@ -234,8 +279,8 @@ public class NetworkPlayer : NetworkBehaviour
         if (hasWeapon)
         {
             background.SetActive(true);
-            if (ammoReserve >= 0) ammoText.text = $"{currentAmmo}/{ammoReserve}";
-            if (ammoReserve == 0 && currentAmmo == 0) ammoText.text = "No ammo!";
+            if (ammoReserve.Value >= 0) ammoText.text = $"{currentAmmo}/{ammoReserve.Value}";
+            if (ammoReserve.Value == 0 && currentAmmo == 0) ammoText.text = "No ammo!";
             if (currentAmmo == 0) backgroundReload.SetActive(true);
             else backgroundReload.SetActive(false);
         }
@@ -248,10 +293,20 @@ public class NetworkPlayer : NetworkBehaviour
     public bool HasWeapon() => hasWeapon;
     public bool IsRunning() => isRunning;
 
-    public void TakeDamage(int damage)
+    public void TakeDamage(int damage, ulong attackerNetId = 0)
     {
         if (!IsServer) return;
         currentHealth.Value -= damage;
+
+        // Если здоровье закончилось и есть атакующий
+        if (currentHealth.Value <= 0 && attackerNetId != 0)
+        {
+            NetworkPlayer attacker = GetNetworkPlayer(attackerNetId);
+            if (attacker != null && attacker.HasWeapon() && currentWeaponData != null)
+            {
+                attacker.AddAmmoForKill(currentWeaponData.ammoPerKill);
+            }
+        }
     }
 
     private void OnHealthChanged(int oldHealth, int newHealth)
@@ -268,5 +323,57 @@ public class NetworkPlayer : NetworkBehaviour
 
         if (IsServer) GetComponent<NetworkObject>().Despawn();
         else gameObject.SetActive(false);
+    }
+    //ДОБавлено
+    private NetworkPlayer GetNetworkPlayer(ulong netId)
+    {
+        foreach (NetworkPlayer player in FindObjectsOfType<NetworkPlayer>())
+        {
+            if (player.OwnerClientId == netId)
+                return player;
+        }
+        return null;
+    }
+    public void AddAmmoForKill(int amount)
+    {
+        if (!IsServer) return;
+        ammoReserve.Value += amount;
+        UpdateAmmoUIClientRpc();
+    }
+
+    [ClientRpc]
+    private void UpdateAmmoUIClientRpc()
+    {
+        if (IsOwner)
+            UpdateAmmoUI();
+    }
+
+    // Вызывается только на сервере
+    public void SetTeam(Team team)
+    {
+        if (!IsServer) return;
+        playerTeam.Value = team;
+    }
+
+    public Team GetTeam()
+    {
+        return playerTeam.Value;
+    }
+    private IEnumerator SpawnWithDelay()
+    {
+        // Ждём 1 кадр, чтобы TeamManager успел запустить OnNetworkSpawn и создать очереди
+        yield return null;
+
+        if (TeamManager.Instance != null)
+        {
+            TeamManager.Instance.AssignTeam(this);
+            Vector3 spawnPos = TeamManager.Instance.GetSpawnPosition(playerTeam.Value);
+            transform.position = spawnPos;
+            Debug.Log($"Спавн игрока на позиции: {spawnPos}");
+        }
+        else
+        {
+            Debug.LogError("TeamManager.Instance = null after delay!");
+        }
     }
 }
