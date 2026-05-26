@@ -87,7 +87,7 @@ public class Player : MonoBehaviour
     {
         if (currentWeaponData.emptySound != null && !weaponAudioSource.isPlaying)
         {
-            weaponAudioSource.PlayOneShot(currentWeaponData.emptySound);
+            weaponAudioSource.PlayOneShot(currentWeaponData.emptySound, currentWeaponData.emptyVolume);
         }
     }
 
@@ -100,7 +100,7 @@ public class Player : MonoBehaviour
         if (currentWeaponData.shootSound != null)
         {
             weaponAudioSource.pitch = Random.Range(currentWeaponData.minPitch, currentWeaponData.maxPitch);
-            weaponAudioSource.PlayOneShot(currentWeaponData.shootSound);
+            weaponAudioSource.PlayOneShot(currentWeaponData.shootSound, currentWeaponData.shootVolume);
         }
 
         // Расход ресурсов
@@ -130,7 +130,7 @@ public class Player : MonoBehaviour
         if (weaponAudioSource != null && newData.weaponPickup != null)
         {
             weaponAudioSource.pitch = 1f;
-            weaponAudioSource.PlayOneShot(newData.weaponPickup);
+            weaponAudioSource.PlayOneShot(newData.weaponPickup, newData.weaponVolume);
         }
         UpdateAmmoUI();
     }

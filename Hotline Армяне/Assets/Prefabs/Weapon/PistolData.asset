@@ -21,5 +21,8 @@ MonoBehaviour:
   shootSound: {fileID: 8300000, guid: 81e7a64da52869947b76a697c98a16da, type: 3}
   emptySound: {fileID: 8300000, guid: 1047d6559e6b599429d651cc24ec97b8, type: 3}
   weaponPickup: {fileID: 8300000, guid: 7df9b1fee10e0974faf6bcd90e55d7cf, type: 3}
+  shootVolume: 0.1
+  emptyVolume: 0.1
+  weaponVolume: 0.1
   minPitch: 0.9
   maxPitch: 1.1
