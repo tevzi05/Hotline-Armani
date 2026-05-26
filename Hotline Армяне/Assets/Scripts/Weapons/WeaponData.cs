@@ -20,6 +20,9 @@ public class WeaponData : ScriptableObject
     public AudioClip shootSound;
     public AudioClip emptySound;
     public AudioClip weaponPickup;
+    [Range(0f, 1f)] public float shootVolume = 0.2f;
+    [Range(0f, 1f)] public float emptyVolume = 0.2f;
+    [Range(0f, 1f)] public float weaponVolume = 0.2f;
     public float minPitch = 0.9f;
     public float maxPitch = 1.1f;
 }

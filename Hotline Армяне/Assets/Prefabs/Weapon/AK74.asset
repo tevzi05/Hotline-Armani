@@ -18,8 +18,8 @@ MonoBehaviour:
   maxAmmo: 30
   ammoPerKill: 10
   weaponOverride: {fileID: 9100000, guid: 4844a8379cd7c134b966a8acb227058b, type: 2}
-  shootSound: {fileID: 8300000, guid: e6db738aeff80944ca80a728f04a1f75, type: 3}
-  emptySound: {fileID: 8300000, guid: 51fe50b7ce9ee6c4aa97690b01e49eb7, type: 3}
-  weaponPickup: {fileID: 8300000, guid: 8f5db70fbdfd7d441851716460c27c7b, type: 3}
+  shootSound: {fileID: 8300000, guid: 7145719ef79945d43b09cab5160f570f, type: 3}
+  emptySound: {fileID: 8300000, guid: 54d8a473fdad0074aa61b8c32a5e56f7, type: 3}
+  weaponPickup: {fileID: 8300000, guid: 496c51f14efdb894cb52ebe3c7810f5e, type: 3}
   minPitch: 0.9
   maxPitch: 1.2

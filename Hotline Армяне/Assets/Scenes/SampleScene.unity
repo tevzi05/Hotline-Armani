@@ -673,7 +673,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ZombieSpawner
   zombiePrefab: {fileID: 5823619398447558353, guid: 8bdd65e68324d774bbd09de019199285, type: 3}
-  spawnInterval: 5
+  spawnInterval: 2
   spawnPoints:
   - {fileID: 1669741754}
   - {fileID: 2114839498}
@@ -1807,7 +1807,7 @@ Camera:
     height: 1
   near clip plane: 0.01
   far clip plane: 1000
-  field of view: 100
+  field of view: 120
   orthographic: 0
   orthographic size: 5
   m_Depth: -1
@@ -2913,6 +2913,10 @@ PrefabInstance:
       propertyPath: m_Offset.y
       value: 0.14528275
       objectReference: {fileID: 0}
+    - target: {fileID: 5628439684978949417, guid: 1a7018f1f6fa1514d9f78625a7f30102, type: 3}
+      propertyPath: pickupSound
+      value: 
+      objectReference: {fileID: 8300000, guid: 496c51f14efdb894cb52ebe3c7810f5e, type: 3}
     - target: {fileID: 7273474983098535261, guid: 1a7018f1f6fa1514d9f78625a7f30102, type: 3}
       propertyPath: m_Sprite
       value: 
@@ -3131,7 +3135,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 7, y: 7}
+  m_SizeDelta: {x: 12, y: 12}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &955366027
 MonoBehaviour:
@@ -4179,6 +4183,22 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 90
       objectReference: {fileID: 0}
+    - target: {fileID: 2212176539387105086, guid: 8bdd65e68324d774bbd09de019199285, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 372.425
+      objectReference: {fileID: 0}
+    - target: {fileID: 2212176539387105086, guid: 8bdd65e68324d774bbd09de019199285, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 430.02502
+      objectReference: {fileID: 0}
+    - target: {fileID: 2212176539387105086, guid: 8bdd65e68324d774bbd09de019199285, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2212176539387105086, guid: 8bdd65e68324d774bbd09de019199285, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3229084809310510123, guid: 8bdd65e68324d774bbd09de019199285, type: 3}
       propertyPath: m_SortingOrder
       value: 1
@@ -4186,6 +4206,10 @@ PrefabInstance:
     - target: {fileID: 5823619398447558353, guid: 8bdd65e68324d774bbd09de019199285, type: 3}
       propertyPath: m_Name
       value: Zombie
+      objectReference: {fileID: 0}
+    - target: {fileID: 8822193406766885998, guid: 8bdd65e68324d774bbd09de019199285, type: 3}
+      propertyPath: maxSpeed
+      value: 12
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -13954,7 +13978,7 @@ MonoBehaviour:
     LookAtTarget: {fileID: 0}
     CustomLookAtTarget: 0
   Lens:
-    FieldOfView: 100
+    FieldOfView: 120
     OrthographicSize: 5
     NearClipPlane: 0.01
     FarClipPlane: 1000
