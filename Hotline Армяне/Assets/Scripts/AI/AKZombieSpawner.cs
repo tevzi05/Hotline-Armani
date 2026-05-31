@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class ZombieSpawner : MonoBehaviour
+public class AKZombieSpawner : MonoBehaviour
 {
     public GameObject zombiePrefab;
     public float spawnInterval = 2f;

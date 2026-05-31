@@ -156,8 +156,8 @@ public class NetworkPlayer : NetworkBehaviour
         Bullet bulletScript = bullet.GetComponent<Bullet>();
         if (bulletScript != null)
         {
-            bulletScript.ownerNetId = OwnerClientId; // запоминаем, кто стрелял
-            bulletScript.shooterTeam = playerTeam.Value;
+            //bulletScript.ownerNetId = OwnerClientId; // запоминаем, кто стрелял
+            //bulletScript.shooterTeam = playerTeam.Value;
         }
         if (bullet.GetComponent<NetworkObject>() != null)
         {
