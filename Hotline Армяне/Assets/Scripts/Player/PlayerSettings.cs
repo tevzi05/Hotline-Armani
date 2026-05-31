@@ -1,13 +1,16 @@
 using UnityEngine;
-using UnityEngine.UI;
+using UnityEngine.Audio;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
+using UnityEngine.UI;
 
 public class PlayerSettings : MonoBehaviour
 {
     [Header("UI Elements")]
     public Slider volumeSlider;
     public Slider brightnessSlider;
+    public Slider sfxSlider;
+
 
     [Header("Post Processing")]
     public Volume globalVolume;
@@ -15,6 +18,7 @@ public class PlayerSettings : MonoBehaviour
 
     [Header("Audio")]
     public AudioSource bgmSource;
+    [SerializeField] private AudioMixer mainMixer;
 
     //void Awake()
     //{
@@ -31,7 +35,7 @@ public class PlayerSettings : MonoBehaviour
     //}
 
     // Start теперь можно оставить пустым или удалить
-    void Start() // Вместо Awake
+    void Start()
     {
         if (globalVolume != null) globalVolume.profile.TryGet(out _colorAdjustments);
 
@@ -42,6 +46,16 @@ public class PlayerSettings : MonoBehaviour
         float savedVolume = PlayerPrefs.GetFloat("MusicVolume", 0.5f);
         ApplyVolumeToMusic(savedVolume);
         if (volumeSlider != null) volumeSlider.value = savedVolume;
+
+        // ЗАГРУЗКА ЗВУКОВ ОРУЖИЯ НАПРЯМУЮ:
+        float savedSFX = PlayerPrefs.GetFloat("SFXVolume", 0.5f);
+        if (sfxSlider != null) sfxSlider.value = savedSFX;
+
+        if (mainMixer != null)
+        {
+            float dB = savedSFX <= 0.0001f ? -80f : Mathf.Log10(savedSFX) * 20;
+            mainMixer.SetFloat("SFXVolume", Mathf.Clamp(dB, -80f, 0f));
+        }
     }
 
 
@@ -81,6 +95,31 @@ public class PlayerSettings : MonoBehaviour
             bgmSource.volume = value;
             //if (bgmSource != null)
             //bgmSource.volume = value;
+    }
+
+    public void SaveSFXVolume()
+    {
+        if (sfxSlider == null) return;
+
+        float val = sfxSlider.value;
+        PlayerPrefs.SetFloat("SFXVolume", val);
+        PlayerPrefs.Save();
+
+        // Управляем микшером напрямую без GlobalSettings
+        if (mainMixer != null)
+        {
+            if (val <= 0.0001f)
+            {
+                mainMixer.SetFloat("SFXVolume", -80f);
+            }
+            else
+            {
+                float dB = Mathf.Log10(val) * 20;
+                mainMixer.SetFloat("SFXVolume", Mathf.Clamp(dB, -80f, 0f));
+            }
+        }
+
+        Debug.Log("Громкость оружия сохранена: " + val);
     }
     private void ApplyBrightnessToScreen(float value)
     {

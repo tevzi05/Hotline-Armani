@@ -1,78 +1,66 @@
 using UnityEngine;
-using Unity.Netcode;  // Добавь, если нет
 
-//public class Bullet : MonoBehaviour
-public class Bullet : NetworkBehaviour
+public class Bullet : MonoBehaviour
 {
     public float speed = 50f;
     public int damage = 25;
-    public ulong ownerNetId; // ID игрока, который выстрелил
+
+    // Этот флаг будет настраивать пушка при выстреле.
+    // Если true — стрелял зомби. Если false — стрелял игрок.
+    [HideInInspector] public bool isEnemyBullet = false;
+
     private Rigidbody2D rb;
-    public Team shooterTeam;
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        // Устанавливаем скорость через физику
         rb.linearVelocity = transform.right * speed;
         Destroy(gameObject, 2f);
     }
 
-    // Update больше не нужен для движения!
-
-    //void OnTriggerEnter2D(Collider2D other)
-    //{
-    //    if (!other.CompareTag("Player"))
-    //    {
-    //        Zombie zombie = other.GetComponent<Zombie>();
-    //        if (zombie != null)
-    //        {
-    //            zombie.TakeDamage(damage);
-    //            Destroy(gameObject);
-    //        }
-    //        else if (other.CompareTag("Wall"))
-    //        {
-    //            Destroy(gameObject);
-    //        }
-    //        else if (!other.CompareTag("Player"))
-    //        {
-    //            Destroy(gameObject);
-    //        }
-    //    }
-    //}
     void OnTriggerEnter2D(Collider2D other)
     {
-        // Попадание по игроку (PvP)
-        NetworkPlayer targetPlayer = other.GetComponent<NetworkPlayer>();
-        if (targetPlayer != null)
+        // 1. ЕСЛИ ПУЛЯ ВРЕЗАЛАСЬ В ИГРОКА
+        if (other.CompareTag("Player"))
         {
-            // Нельзя убить себя
-            if (targetPlayer.OwnerClientId == ownerNetId) return;
+            // Если это пуля игрока (рикошет или баг коллизии) — игнорируем
+            if (!isEnemyBullet) return;
 
-            if (targetPlayer.GetTeam() == shooterTeam) return;
-
-            // Наносим урон только на сервере
-            if (IsServer)
+            // Если это пуля ЗОМБИ — наносим урон игроку и уничтожаем пулю
+            Player player = other.GetComponent<Player>();
+            if (player != null)
             {
-                targetPlayer.TakeDamage(damage, ownerNetId);
+                player.TakeDamage(damage);
             }
             Destroy(gameObject);
             return;
         }
 
-        // Остальные коллизии (зомби, стены, и т.д.)
+        // 2. ЕСЛИ ПУЛЯ ВРЕЗАЛАСЬ В ЗОМБИ (обычного или с АК)
         Zombie zombie = other.GetComponent<Zombie>();
-        if (zombie != null)
+        ZombieAK zombieAK = other.GetComponent<ZombieAK>();
+
+        if (zombie != null || zombieAK != null)
         {
-            zombie.TakeDamage(damage);
+            // Если это пуля другого зомби — пуля просто летит сквозь него (нет дружественного огня)
+            if (isEnemyBullet) return;
+
+            // Если стрелял ИГРОК — наносим урон зомби
+            if (zombie != null) zombie.TakeDamage(damage);
+            if (zombieAK != null) zombieAK.TakeDamage(damage);
+
             Destroy(gameObject);
+            return;
         }
-        else if (other.CompareTag("Wall"))
+
+        // 3. ЕСЛИ ПУЛЯ ВРЕЗАЛАСЬ В СТЕНУ ИЛИ ДРУГОЙ ОБЪЕКТ
+        if (other.CompareTag("Wall"))
         {
             Destroy(gameObject);
         }
         else if (!other.CompareTag("Player"))
         {
+            // На всякий случай уничтожаем при любых других коллизиях
             Destroy(gameObject);
         }
     }

@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using TMPro;
 using System.Collections;
+using UnityEngine.Audio;
 
 public class Player : MonoBehaviour
 {
@@ -14,13 +15,10 @@ public class Player : MonoBehaviour
     private Vector2 moveDirection;
 
     [Header("Weapon System")]
-    [SerializeField] private WeaponData currentWeaponData; // Ссылка на текущие настройки оружия
-    [SerializeField] private AudioSource weaponAudioSource;
+    private Weapon currentWeapon; // Ссылка на новый чистый компонент оружия
     private bool hasWeapon = false;
-    private int currentAmmo;
-    private int ammoReserve;      // Патроны в запасе (кармане)
-    private int magazineSize;
     private float nextFireTime = 0f;
+    [SerializeField] private AudioMixerGroup sfxGroup;
 
     [Header("Reloading")]
     public float reloadTime = 1.5f;
@@ -28,7 +26,6 @@ public class Player : MonoBehaviour
 
     [Header("Setup")]
     [SerializeField] private Transform firePoint;
-    [SerializeField] private GameObject bulletPrefab; // Можно оставить как дефолт, если оружия нет
 
     [Header("Health")]
     [SerializeField] private int maxHealth = 100;
@@ -38,111 +35,81 @@ public class Player : MonoBehaviour
     [SerializeField] private TextMeshProUGUI ammoText;
     [SerializeField] private TextMeshProUGUI reloadText;
 
-
     private void Awake()
     {
         currentHealth = maxHealth;
         Instance = this;
         rb = GetComponent<Rigidbody2D>();
-
-        if (weaponAudioSource == null)
-            weaponAudioSource = GetComponent<AudioSource>();
     }
 
     private void Update()
     {
         if (Time.timeScale == 0) return;
+
         // Ввод движения
-        if (GameInput.Instance != null) moveDirection = GameInput.Instance.GetMovementVector().normalized;
+        if (GameInput.Instance != null)
+            moveDirection = GameInput.Instance.GetMovementVector().normalized;
 
         // Логика стрельбы
         HandleShooting();
-        if (Input.GetKeyDown(KeyCode.R) && !isReloading && currentAmmo < magazineSize && ammoReserve > 0)
-        {
-            StartCoroutine(Reload());
-        }
 
+        // Логика перезарядки (проверяем условия теперь через скрипт Weapon)
+        if (Input.GetKeyDown(KeyCode.R) && !isReloading && hasWeapon && currentWeapon != null)
+        {
+            if (currentWeapon.NeedsReload())
+            {
+                StartCoroutine(Reload());
+            }
+        }
     }
 
     private void HandleShooting()
     {
-        if (!hasWeapon || currentWeaponData == null) return;
+        // Если оружия нет, или таймер стрельбы еще не прошел — ничего не делаем
+        if (!hasWeapon || currentWeapon == null || !currentWeapon.CanShoot(nextFireTime)) return;
 
         bool isFiring = Mouse.current.leftButton.isPressed;
 
-        if (isFiring && Time.time >= nextFireTime)
+        if (isFiring)
         {
-            if (currentAmmo > 0)
-            {
-                Shoot();
-            }
-            else
-            {
-                PlayEmptySound();
-                nextFireTime = Time.time + 0.25f;
-            }
+            // Передаем управление выстрелом самой пушке.
+            // Она сама создаст пулю, заберет патрон, сыграет нужный звук и вернет задержку (fireRate).
+            float fireDelay = currentWeapon.Fire(firePoint);
+
+            // Задаем время следующего выстрела
+            nextFireTime = Time.time + fireDelay;
+
+            UpdateAmmoUI();
         }
     }
-    private void PlayEmptySound()
-    {
-        if (currentWeaponData.emptySound != null && !weaponAudioSource.isPlaying)
-        {
-            weaponAudioSource.PlayOneShot(currentWeaponData.emptySound, currentWeaponData.emptyVolume);
-        }
-    }
-
-    private void Shoot()
-    {
-        // Создаем пулю (префаб берем из данных оружия)
-        Instantiate(currentWeaponData.bulletPrefab, firePoint.position, firePoint.rotation);
-
-        // Звук (берем из данных оружия)
-        if (currentWeaponData.shootSound != null)
-        {
-            weaponAudioSource.pitch = Random.Range(currentWeaponData.minPitch, currentWeaponData.maxPitch);
-            weaponAudioSource.PlayOneShot(currentWeaponData.shootSound, currentWeaponData.shootVolume);
-        }
-
-        // Расход ресурсов
-        if (isReloading || currentAmmo <= 0) return;
-        currentAmmo--;
-        nextFireTime = Time.time + currentWeaponData.fireRate;
-        UpdateAmmoUI();
-    }
-
-
 
     public void EquipWeapon(WeaponData newData)
     {
-        currentWeaponData = newData;
-        hasWeapon = true;
-        currentAmmo = newData.maxAmmo;
-        magazineSize = newData.maxAmmo;
-        ammoReserve = newData.maxAmmo;
+        if (newData == null) return;
 
-        // СМЕНА АНИМАЦИЙ:
+        currentWeapon = firePoint.GetComponent<Weapon>();
+
+        if (currentWeapon != null)
+        {
+            currentWeapon.Init(newData);
+            hasWeapon = true;
+        }
         Animator anim = GetComponentInChildren<Animator>();
         if (anim != null && newData.weaponOverride != null)
         {
             anim.runtimeAnimatorController = newData.weaponOverride;
         }
 
-        if (weaponAudioSource != null && newData.weaponPickup != null)
-        {
-            weaponAudioSource.pitch = 1f;
-            weaponAudioSource.PlayOneShot(newData.weaponPickup, newData.weaponVolume);
-        }
         UpdateAmmoUI();
     }
 
     public void AddAmmo()
     {
-        if (!hasWeapon || currentWeaponData == null) return;
-        int amount = currentWeaponData.ammoPerKill;
-        ammoReserve += amount;
-        UpdateAmmoUI();
+        if (!hasWeapon || currentWeapon == null) return;
 
-        Debug.Log($"+{amount} ammo. Now: {currentAmmo}/{ammoReserve}");
+        // Делегируем задачу добавления патронов пушке
+        currentWeapon.AddAmmo();
+        UpdateAmmoUI();
     }
 
     private IEnumerator Reload()
@@ -151,15 +118,11 @@ public class Player : MonoBehaviour
 
         yield return new WaitForSeconds(reloadTime);
 
-        /// Считаем, сколько пуль не хватает в магазине
-        int amountNeeded = magazineSize - currentAmmo;
-
-        // Проверяем, хватает ли нам патронов в запасе
-        int amountToTake = Mathf.Min(amountNeeded, ammoReserve);
-
-        // Перекладываем из запаса в магазин
-        currentAmmo += amountToTake;
-        ammoReserve -= amountToTake;
+        if (currentWeapon != null)
+        {
+            // Пушка сама пересчитает свои патроны в магазине и запасе
+            currentWeapon.ExecuteReload();
+        }
 
         UpdateAmmoUI();
         isReloading = false;
@@ -169,13 +132,13 @@ public class Player : MonoBehaviour
     {
         if (GameInput.Instance == null || rb == null) return;
 
-        // Поворот
+        // Поворот (твой код)
         Vector3 mousePos = GameInput.Instance.GetMousePosition();
         Vector3 direction = mousePos - transform.position;
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
         rb.MoveRotation(angle);
 
-        // Движение
+        // Движение (твой код)
         Vector2 moveVelocity = moveDirection * movingSpeed;
         rb.MovePosition(rb.position + moveVelocity * Time.fixedDeltaTime);
 
@@ -186,6 +149,7 @@ public class Player : MonoBehaviour
     {
         if (!hasWeapon || firePoint == null) return;
 
+        // Поворот точки стрельбы за мышкой (твой код)
         Vector3 mousePos = GameInput.Instance.GetMousePosition();
         Vector3 direction = mousePos - transform.position;
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
@@ -199,21 +163,29 @@ public class Player : MonoBehaviour
         GameObject background = ammoText.transform.parent.gameObject;
         GameObject backgroundReload = reloadText.transform.parent.gameObject;
 
-        if (hasWeapon)
+        if (hasWeapon && currentWeapon != null)
         {
             background.SetActive(true);
-            if (ammoReserve >= 0) ammoText.text = $"{currentAmmo}/{ammoReserve}";
-            if (ammoReserve == 0 && currentAmmo == 0) ammoText.text = "No ammo!";
-            if (currentAmmo == 0) backgroundReload.SetActive(true);
-            else backgroundReload.SetActive(false);
+
+            // Запрашиваем красивый текст патронов у самой пушки
+            ammoText.text = currentWeapon.GetAmmoText();
+
+            // Проверяем, кончились ли патроны совсем
+            if (currentWeapon.IsOutofAmmo())
+                ammoText.text = "No ammo!";
+
+            // Включаем плашку перезарядки, если магазин пуст
+            backgroundReload.SetActive(currentWeapon.IsMagazineEmpty());
         }
         else
         {
             background.SetActive(false);
+            backgroundReload.SetActive(false);
         }
     }
 
     public bool HasWeapon() => hasWeapon;
+    public bool IsDead() => currentHealth <= 0;
     public bool IsRunning() => isRunning;
 
     public void TakeDamage(int damage)
@@ -224,14 +196,11 @@ public class Player : MonoBehaviour
 
     private void Die()
     {
-        // Оповещаем менеджер
         if (RestartManager.Instance != null)
         {
             RestartManager.Instance.ShowDeathScreen();
         }
-
-        // Выключаем игрока
         gameObject.SetActive(false);
     }
-
+    
 }
