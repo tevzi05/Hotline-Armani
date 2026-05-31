@@ -7,6 +7,7 @@ public class WeaponData : ScriptableObject
     public GameObject bulletPrefab;
     public float fireRate = 0.15f;
     public int maxAmmo = 30;
+    public int maxReserveAmmo = 30;
 
     // Ќќ¬јя ѕ≈–≈ћ≈ЌЌјя: сколько патронов давать за убийство
     [Header("Economy")]

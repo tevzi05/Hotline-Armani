@@ -4,7 +4,7 @@ using TMPro;
 
 public class TextOSDSlider : MonoBehaviour
 {
-    [SerializeField] private TextMeshProUGUI osdText; // Перетащи сюда текст
+    [SerializeField] private TextMeshProUGUI osdText;
     [SerializeField] private string barChar = "\u2588";    // Символ прямоугольника 
 
     private Slider slider;

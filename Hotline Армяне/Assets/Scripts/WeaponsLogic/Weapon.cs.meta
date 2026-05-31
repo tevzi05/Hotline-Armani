@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 4e7eed08486c748469a7b759025eede4
+guid: ca592129708f71a4c922e551941c9d17
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
   defaultReferences:
-  - mainMixer: {fileID: 24100000, guid: a926ceb80385553469066a19f2ec4e6f, type: 2}
+  - sfxGroup: {fileID: -2882961293880254636, guid: a926ceb80385553469066a19f2ec4e6f, type: 2}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 
