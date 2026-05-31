@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 4e7eed08486c748469a7b759025eede4
+guid: 76d8e6fc299454b46855a3a24e7326d6
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
   defaultReferences:
-  - mainMixer: {fileID: 24100000, guid: a926ceb80385553469066a19f2ec4e6f, type: 2}
+  - zombiePrefab: {fileID: 5823619398447558353, guid: e827fa13905eb354da2b18a6edf7e2f7, type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

@@ -13,9 +13,9 @@ GameObject:
   - component: {fileID: 5628439684978949417}
   - component: {fileID: 3828309237170177258}
   - component: {fileID: 6339531091064928454}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: AKPickup
-  m_TagString: Untagged
+  m_TagString: Weapon
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -30,7 +30,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.37, y: 5.5, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.7, y: 0.6, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -82,7 +82,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: 6960355267218074104, guid: 4cb2754b06ad26d4bb8354c4c490e7af, type: 3}
+  m_Sprite: {fileID: -249999132441793686, guid: 1bd160a7b53f5b145a3a5174c5597782, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -141,8 +141,8 @@ CircleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0.1452826}
-  m_Radius: 0.313051
+  m_Offset: {x: -0.0000007947286, y: 0.14528275}
+  m_Radius: 1.4657108
 --- !u!82 &6339531091064928454
 AudioSource:
   m_ObjectHideFlags: 0
