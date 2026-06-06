@@ -37,24 +37,30 @@ public class Weapon : MonoBehaviour
     {
         if (currentAmmo > 0)
         {
-            // Спавним пулю
-            GameObject bulletObj = Instantiate(currentWeaponData.bulletPrefab, firePoint.position, firePoint.rotation);
-
-            // --- БЛОК НАСТРОЙКИ ПУЛИ: ---
-            Bullet bulletScript = bulletObj.GetComponent<Bullet>();
-            if (bulletScript != null)
+            // ПРОВЕРЯЕМ: ДРОБОВИК ИЛИ ОБЫЧНАЯ ПУШКА?
+            if (currentWeaponData.isShotgun)
             {
-                // Проверяем: если этот скрипт Weapon висит НЕ на игроке (а на зомби),
-                // то помечаем пулю как вражескую
-                if (GetComponentInParent<Player>() == null)
+                // Цикл выпускает столько дробинок, сколько указано в WeaponData
+                for (int i = 0; i < currentWeaponData.pelletsCount; i++)
                 {
-                    bulletScript.isEnemyBullet = true;
+                    // Считаем случайное отклонение угла для каждой дробинки
+                    float randomSpread = Random.Range(-currentWeaponData.spreadAngle / 2f, currentWeaponData.spreadAngle / 2f);
+                    Quaternion pelletRotation = firePoint.rotation * Quaternion.Euler(0, 0, randomSpread);
+                    GameObject pelletObj = Instantiate(currentWeaponData.bulletPrefab, firePoint.position, pelletRotation);
+                    SetupBulletProperties(pelletObj);
                 }
             }
-            // -----------------------------
+            else
+            {
+                // Логика любой пушки кроме дробовика
+                GameObject bulletObj = Instantiate(currentWeaponData.bulletPrefab, firePoint.position, firePoint.rotation);
+                SetupBulletProperties(bulletObj);
+            }
 
+            // Звук выстрела (остается единым)
             float randomPitch = Random.Range(currentWeaponData.minPitch, currentWeaponData.maxPitch);
             PlaySound(currentWeaponData.shootSound, currentWeaponData.shootVolume, randomPitch, true);
+
             currentAmmo--;
             return currentWeaponData.fireRate;
         }
@@ -62,6 +68,18 @@ public class Weapon : MonoBehaviour
         {
             PlaySound(currentWeaponData.emptySound, currentWeaponData.emptyVolume, 1f, false);
             return 0.25f;
+        }
+    }
+
+    private void SetupBulletProperties(GameObject bulletObj)
+    {
+        Bullet bulletScript = bulletObj.GetComponent<Bullet>();
+        if (bulletScript != null)
+        {
+            if (GetComponentInParent<Player>() == null)
+            {
+                bulletScript.isEnemyBullet = true;
+            }
         }
     }
 
