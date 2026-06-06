@@ -8,6 +8,9 @@ public class Player : MonoBehaviour
 {
     public static Player Instance { get; private set; }
 
+    [Header("Dialogue Lock")]
+    private bool isLockedInDialogue = false;
+
     [Header("Movement")]
     [SerializeField] private float movingSpeed = 15f;
     private Rigidbody2D rb;
@@ -15,7 +18,7 @@ public class Player : MonoBehaviour
     private Vector2 moveDirection;
 
     [Header("Weapon System")]
-    private Weapon currentWeapon; // Ссылка на новый чистый компонент оружия
+    private Weapon currentWeapon;
     private bool hasWeapon = false;
     private float nextFireTime = 0f;
     [SerializeField] private AudioMixerGroup sfxGroup;
@@ -46,6 +49,8 @@ public class Player : MonoBehaviour
     {
         if (Time.timeScale == 0) return;
 
+        if (isLockedInDialogue) return;
+
         // Ввод движения
         if (GameInput.Instance != null)
             moveDirection = GameInput.Instance.GetMovementVector().normalized;
@@ -53,7 +58,7 @@ public class Player : MonoBehaviour
         // Логика стрельбы
         HandleShooting();
 
-        // Логика перезарядки (проверяем условия теперь через скрипт Weapon)
+        // Логика перезарядки
         if (Input.GetKeyDown(KeyCode.R) && !isReloading && hasWeapon && currentWeapon != null)
         {
             if (currentWeapon.NeedsReload())
@@ -132,13 +137,15 @@ public class Player : MonoBehaviour
     {
         if (GameInput.Instance == null || rb == null) return;
 
-        // Поворот (твой код)
+        if (isLockedInDialogue) return;
+        
+        // Поворот
         Vector3 mousePos = GameInput.Instance.GetMousePosition();
         Vector3 direction = mousePos - transform.position;
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
         rb.MoveRotation(angle);
 
-        // Движение (твой код)
+        // Движение
         Vector2 moveVelocity = moveDirection * movingSpeed;
         rb.MovePosition(rb.position + moveVelocity * Time.fixedDeltaTime);
 
@@ -147,13 +154,16 @@ public class Player : MonoBehaviour
 
     private void LateUpdate()
     {
+
+        if (isLockedInDialogue) return;
+
         if (!hasWeapon || firePoint == null) return;
 
-        // Поворот точки стрельбы за мышкой (твой код)
         Vector3 mousePos = GameInput.Instance.GetMousePosition();
         Vector3 direction = mousePos - transform.position;
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
         firePoint.rotation = Quaternion.Euler(0, 0, angle);
+
     }
 
     private void UpdateAmmoUI()
@@ -167,7 +177,6 @@ public class Player : MonoBehaviour
         {
             background.SetActive(true);
 
-            // Запрашиваем красивый текст патронов у самой пушки
             ammoText.text = currentWeapon.GetAmmoText();
 
             // Проверяем, кончились ли патроны совсем
@@ -202,5 +211,17 @@ public class Player : MonoBehaviour
         }
         gameObject.SetActive(false);
     }
-    
+
+    public void SetDialogueLock(bool lockState)
+    {
+        isLockedInDialogue = lockState;
+
+        if (lockState)
+        {
+            // Если заблокировали — мгновенно сбрасываем скорость, чтобы игрок не скользил по инерции
+            if (rb != null) rb.linearVelocity = Vector2.zero;
+            isRunning = false;
+        }
+    }
+
 }
