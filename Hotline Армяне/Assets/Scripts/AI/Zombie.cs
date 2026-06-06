@@ -5,13 +5,13 @@ public class Zombie : MonoBehaviour
 {
     [Header("Health")]
     public int maxHealth = 1;
-    private int currentHealth;
+    protected int currentHealth;
 
 
     [Header("Attack")]
     public int damageToPlayer = 20;
     public float attackCooldown = 1f;
-    private float lastAttackTime;
+    protected float lastAttackTime;
 
     [Header("Points")]
     public int points = 100;
@@ -21,12 +21,12 @@ public class Zombie : MonoBehaviour
     public float viewDistance = 100f;     // Дистанция зрения
     public LayerMask obstacleMask;       // Слой стен (выбери в инспекторе)
 
-    private Transform player;
-    private Rigidbody2D rb;
-    private IAstarAI ai;
+    protected Transform player;
+    protected Rigidbody2D rb;
+    protected IAstarAI ai;
     
 
-    private void Start()
+    protected virtual void Start()
     {
         currentHealth = maxHealth;
         ai = GetComponent<IAstarAI>();
@@ -42,9 +42,9 @@ public class Zombie : MonoBehaviour
         }
     }
 
-    private void FixedUpdate()
+    protected virtual void FixedUpdate()
     {
-        if (rb == null) return;
+        if (rb == null || player == null) return;
 
         Vector2 lookDirection;
 
@@ -69,7 +69,7 @@ public class Zombie : MonoBehaviour
         rb.MoveRotation(angle + rotationOffset);
     }
 
-    private bool CanSeePlayer()
+    protected bool CanSeePlayer()
     {
         // 1. Проверяем дистанцию
         float distanceToPlayer = Vector2.Distance(transform.position, player.position);
@@ -106,7 +106,7 @@ public class Zombie : MonoBehaviour
         if (currentHealth <= 0) Die();
     }
 
-    private void Die()
+    protected virtual void Die()
     {
         if (RestartManager.Instance != null) RestartManager.Instance.AddPoints(points);
         Player playerScript = GameObject.FindGameObjectWithTag("Player")?.GetComponent<Player>();
