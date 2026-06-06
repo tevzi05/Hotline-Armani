@@ -5,7 +5,7 @@ MonoImporter:
   serializedVersion: 2
   defaultReferences:
   - bulletPrefab: {instanceID: 0}
-  - weaponOverride: {fileID: 22100000, guid: 21fc636ee6f5cbe498ede683239f482f, type: 2}
+  - weaponOverride: {fileID: 22100000, guid: 855c114b189b099448caf30f572483ce, type: 2}
   - shootSound: {instanceID: 0}
   - emptySound: {instanceID: 0}
   - weaponPickup: {instanceID: 0}

@@ -36,19 +36,17 @@ public class Bullet : MonoBehaviour
             return;
         }
 
-        // 2. ЕСЛИ ПУЛЯ ВРЕЗАЛАСЬ В ЗОМБИ (обычного или с АК)
-        Zombie zombie = other.GetComponent<Zombie>();
-        ZombieAK zombieAK = other.GetComponent<ZombieAK>();
+        // 2. ЕСЛИ ПУЛЯ ВРЕЗАЛАСЬ В ПРОТИВНИКА
+        Zombie enemy = other.GetComponent<Zombie>();
 
-        if (zombie != null || zombieAK != null)
+        if (enemy != null)
         {
-            // Если это пуля другого зомби — пуля просто летит сквозь него (нет дружественного огня)
+            
             if (isEnemyBullet) return;
 
             // Если стрелял ИГРОК — наносим урон зомби
-            if (zombie != null) zombie.TakeDamage(damage);
-            if (zombieAK != null) zombieAK.TakeDamage(damage);
-
+            if (enemy != null) enemy.TakeDamage(damage);
+           
             Destroy(gameObject);
             return;
         }

@@ -136,7 +136,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca592129708f71a4c922e551941c9d17, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Weapon
-  audioSource: {fileID: 0}
+  audioSource: {fileID: 547325090493245875}
   sfxGroup: {fileID: -2882961293880254636, guid: a926ceb80385553469066a19f2ec4e6f, type: 2}
 --- !u!82 &547325090493245875
 AudioSource:
@@ -351,7 +351,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDamping: 0
   m_AngularDamping: 0.05
-  m_GravityScale: 1
+  m_GravityScale: 0
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -359,7 +359,7 @@ Rigidbody2D:
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
-  m_Interpolate: 1
+  m_Interpolate: 0
   m_SleepingMode: 0
   m_CollisionDetection: 0
   m_Constraints: 0
@@ -472,7 +472,7 @@ MonoBehaviour:
   targetCompatibility: {fileID: 0}
   maxAcceleration: -2.5
   rotationSpeed: 360
-  slowdownDistance: 0.6
+  slowdownDistance: 1
   pickNextWaypointDist: 2
   endReachedDistance: 0.2
   alwaysDrawGizmos: 0
@@ -542,15 +542,15 @@ MonoBehaviour:
   maxHealth: 1
   damageToPlayer: 20
   attackCooldown: 1
-  weaponData: {fileID: 11400000, guid: 33f534c9b5c2e1e4b9eee0eaeb372a94, type: 2}
-  firePoint: {fileID: 1223492950224543980}
-  shootingDistance: 12
   points: 200
   rotationOffset: 0
   viewDistance: 100
   obstacleMask:
     serializedVersion: 2
     m_Bits: 256
+  weaponData: {fileID: 11400000, guid: 33f534c9b5c2e1e4b9eee0eaeb372a94, type: 2}
+  firePoint: {fileID: 1223492950224543980}
+  shootingDistance: 12
 --- !u!114 &5323493742388226135
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -576,8 +576,8 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: -2882961293880254636, guid: a926ceb80385553469066a19f2ec4e6f, type: 2}
   m_audioClip: {fileID: 0}
-  m_Resource: {fileID: 0}
-  m_PlayOnAwake: 1
+  m_Resource: {fileID: 8300000, guid: 496c51f14efdb894cb52ebe3c7810f5e, type: 3}
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0

@@ -1,5 +1,5 @@
 using UnityEngine;
-using Unity.Netcode; // Добавьте в самый верх
+using Unity.Netcode; 
 
 public class PlayerAnimation : MonoBehaviour
 {

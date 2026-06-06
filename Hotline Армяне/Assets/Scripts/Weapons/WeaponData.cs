@@ -9,7 +9,12 @@ public class WeaponData : ScriptableObject
     public int maxAmmo = 30;
     public int maxReserveAmmo = 30;
 
-    // Ќќ¬јя ѕ≈–≈ћ≈ЌЌјя: сколько патронов давать за убийство
+    // логика дл€ дробовика
+    [Header("Shotgun & Spread Settings")]
+    public bool isShotgun = false;       
+    public int pelletsCount = 5;         // —колько дробинок вылетает за один выстрел
+    public float spreadAngle = 15f;      // ”гол разлета дроби в градусах
+
     [Header("Economy")]
     public int ammoPerKill = 5;
 

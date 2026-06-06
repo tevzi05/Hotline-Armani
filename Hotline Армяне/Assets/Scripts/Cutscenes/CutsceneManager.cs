@@ -13,7 +13,7 @@ public class CutsceneManager : MonoBehaviour
     [Header("Контент")]
     public Sprite slide1;
     public Sprite slide2;
-    public float timePerSlide = 3f;
+    public float timePerSlide = 1f;
 
     void Start()
     {
