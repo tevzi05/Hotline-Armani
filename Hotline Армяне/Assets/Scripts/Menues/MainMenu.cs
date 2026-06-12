@@ -12,6 +12,12 @@ public class MainMenu : MonoBehaviour
 
     }
 
+    public void Extraction()
+    {
+        SceneManager.LoadScene("Extraction");
+        if (MusicController.Instance != null) MusicController.Instance.StartMusic();
+    }
+
     public void ExitGame()
     {
         Application.Quit();
