@@ -21,9 +21,12 @@ public class DialogueManager : MonoBehaviour
     private bool isTyping = false;
     private string currentCompleteSentence = "";
 
+    private GameObject objective;
+
     private void Start()
     {
         sentences = new Queue<string>();
+        objective = GameObject.FindGameObjectWithTag("Objective");
     }
 
     private void Update()
@@ -125,5 +128,11 @@ public class DialogueManager : MonoBehaviour
         if (boxAnim != null) boxAnim.SetBool("startOpen", false);
 
         if (activator != null) activator.DialogueEnd();
+
+        if (WavesManager.Instance != null)
+        {
+            WavesManager.Instance.StartSurvivalMode();
+        }
+        if (objective != null) objective.SetActive(false);
     }
 }

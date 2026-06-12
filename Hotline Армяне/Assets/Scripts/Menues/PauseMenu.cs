@@ -60,7 +60,7 @@ public class PauseMenu : MonoBehaviour
     }
 
 
-    public void LosdMenu()
+    public void LoadMenu()
     {
         Time.timeScale = 1f;
         if (MusicController.Instance != null) MusicController.Instance.StopMusic();
