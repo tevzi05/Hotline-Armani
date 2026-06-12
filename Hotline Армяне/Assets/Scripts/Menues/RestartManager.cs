@@ -6,7 +6,7 @@ public class RestartManager : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI deathText;
     [SerializeField] private TextMeshProUGUI PtsText;
-    private int currentPoints = 0;
+    public int currentPoints = 0;
 
     // Переменная для хранения ссылки на объект плашки
     private GameObject deathPanel;
