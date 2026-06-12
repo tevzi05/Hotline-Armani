@@ -22,6 +22,8 @@ MonoBehaviour:
   m_Scenes:
   - m_enabled: 1
     m_path: Assets/Scenes/MultiplayerScene.unity
+  - m_enabled: 1
+    m_path: Assets/Scenes/Extraction.unity
   m_ScriptingDefines:
   - 
   m_PlayerSettingsYaml:

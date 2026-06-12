@@ -110,6 +110,11 @@ public class Zombie : MonoBehaviour
     {
         if (RestartManager.Instance != null) RestartManager.Instance.AddPoints(points);
         Player playerScript = GameObject.FindGameObjectWithTag("Player")?.GetComponent<Player>();
+
+        if (WavesManager.Instance != null)
+        {
+            WavesManager.Instance.RegisterEnemyDeath(this.gameObject);
+        }
         if (playerScript != null)
         {
             playerScript.AddAmmo();
