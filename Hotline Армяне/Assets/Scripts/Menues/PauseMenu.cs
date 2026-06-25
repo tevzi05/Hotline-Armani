@@ -34,6 +34,7 @@ public class PauseMenu : MonoBehaviour
     public void Pause()
     {
         if (MusicController.Instance != null) MusicController.Instance.SetMuffled(true);
+        if (WaveMusicController.Instance != null) WaveMusicController.Instance.SetMuffled(true);
 
         Time.timeScale = 0;
         if (pauseGameMenu != null) pauseGameMenu.SetActive(true);
@@ -45,6 +46,8 @@ public class PauseMenu : MonoBehaviour
     public void Resume()
     {
         if (MusicController.Instance != null) MusicController.Instance.SetMuffled(false);
+        if (WaveMusicController.Instance != null) WaveMusicController.Instance.SetMuffled(false);
+
 
         Time.timeScale = 1f;
         if (pauseGameMenu != null) pauseGameMenu.SetActive(false);
@@ -56,7 +59,7 @@ public class PauseMenu : MonoBehaviour
     {
         Time.timeScale = 1f;
         if (MusicController.Instance != null) MusicController.Instance.RestartMusic();
-        SceneManager.LoadScene("SampleScene");
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
 

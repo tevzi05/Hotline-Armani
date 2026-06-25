@@ -1,5 +1,7 @@
 using UnityEngine;
 using UnityEngine.Audio;
+using System.Collections;
+using Unity.VisualScripting;
 
 public class Weapon : MonoBehaviour
 {
@@ -11,6 +13,9 @@ public class Weapon : MonoBehaviour
     private int currentAmmo;
     private int ammoReserve;
     private int magazineSize;
+    private bool isReloading = false;
+    private bool interruptReload = false;
+    public bool IsReloading => isReloading;
 
     // Метод Init теперь принимает ТОЛЬКО данные оружия
     public void Init(WeaponData data)
@@ -30,11 +35,13 @@ public class Weapon : MonoBehaviour
         PlaySound(currentWeaponData.weaponPickup, currentWeaponData.weaponVolume, 1f, false);
     }
 
-    public bool CanShoot(float nextFireTime) => currentWeaponData != null && Time.time >= nextFireTime;
+    public bool CanShoot(float nextFireTime) => currentWeaponData != null && Time.time >= nextFireTime && !isReloading;
 
 
     public float Fire(Transform firePoint)
     {
+        if (isReloading) return 0f;
+
         if (currentAmmo > 0)
         {
             // ПРОВЕРЯЕМ: ДРОБОВИК ИЛИ ОБЫЧНАЯ ПУШКА?
@@ -89,17 +96,88 @@ public class Weapon : MonoBehaviour
         if (currentWeaponData != null) ammoReserve += currentWeaponData.ammoPerKill;
     }
 
-    public bool NeedsReload() => currentAmmo < magazineSize && ammoReserve > 0;
+    public bool NeedsReload() => currentAmmo < magazineSize && ammoReserve > 0 && !isReloading;
 
-    public void ExecuteReload()
+    public void StartReload(System.Action onReloadComplete)
     {
+        if (!NeedsReload()) return;
+        interruptReload = false;
+        if (currentWeaponData.isShotgun)
+        {
+            StartCoroutine(ShotgunReloadCoroutine(onReloadComplete));
+        }
+        else
+        {
+            StartCoroutine(ReloadCoroutine(onReloadComplete));
+        }
+
+
+    }
+
+    private IEnumerator ShotgunReloadCoroutine(System.Action onReloadComplete)
+    {
+        isReloading = true;
+        PlaySound(currentWeaponData.cocking, currentWeaponData.cockingVolume, 1f, true);
+
+        yield return new WaitForSeconds(0.3f);
+
+        while (currentAmmo < magazineSize && ammoReserve > 0 && !interruptReload)
+        {
+
+            yield return new WaitForSeconds(currentWeaponData.reloadTime);
+
+            if (interruptReload) break;
+
+            currentAmmo++;
+            ammoReserve--;
+            onReloadComplete?.Invoke();
+
+            PlaySound(currentWeaponData.weaponReloadSound, currentWeaponData.reloadVolume, 1f, true);
+        }
+        yield return new WaitForSeconds(0.3f);
+
+        PlaySound(currentWeaponData.weaponPickup, currentWeaponData.weaponVolume, 1f, true);
+        isReloading = false;
+        onReloadComplete?.Invoke();
+
+    }
+
+    public void TryInterruptReload()
+    {
+        if (currentWeaponData != null && currentWeaponData.isShotgun && isReloading)
+        {
+            interruptReload = true;
+            Debug.Log("ща стрельну");
+        }
+    }
+
+    private IEnumerator ReloadCoroutine(System.Action onReloadComplete)
+    {
+        isReloading = true;
+
+
+        PlaySound(currentWeaponData.weaponReloadSound, currentWeaponData.reloadVolume, 1f, true);
+        yield return new WaitForSeconds(currentWeaponData.reloadTime);
+
+        // Логика пересчета патронов (бывший ExecuteReload)
         int amountNeeded = magazineSize - currentAmmo;
         int amountToTake = Mathf.Min(amountNeeded, ammoReserve);
         currentAmmo += amountToTake;
         ammoReserve -= amountToTake;
 
-        // Если добавил звук перезарядки в WeaponData:
-        // PlaySound(currentWeaponData.reloadSound, currentWeaponData.reloadVolume, 1f, false);
+        isReloading = false;
+
+        onReloadComplete?.Invoke();
+    }
+
+    public void ForceInstantReload()
+    {
+        if (currentWeaponData == null) return;
+
+        int amountNeeded = magazineSize - currentAmmo;
+        int amountToTake = Mathf.Min(amountNeeded, ammoReserve);
+        currentAmmo += amountToTake;
+        ammoReserve -= amountToTake;
     }
 
     private void PlaySound(AudioClip clip, float volume, float pitch, bool allowOverlap)
