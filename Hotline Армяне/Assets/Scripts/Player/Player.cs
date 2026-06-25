@@ -23,10 +23,6 @@ public class Player : MonoBehaviour
     private float nextFireTime = 0f;
     [SerializeField] private AudioMixerGroup sfxGroup;
 
-    [Header("Reloading")]
-    public float reloadTime = 1.5f;
-    private bool isReloading = false;
-
     [Header("Setup")]
     [SerializeField] private Transform firePoint;
 
@@ -59,31 +55,41 @@ public class Player : MonoBehaviour
         HandleShooting();
 
         // Логика перезарядки
-        if (Input.GetKeyDown(KeyCode.R) && !isReloading && hasWeapon && currentWeapon != null)
+        if (Input.GetKeyDown(KeyCode.R) && currentWeapon != null)
         {
             if (currentWeapon.NeedsReload())
             {
-                StartCoroutine(Reload());
+                currentWeapon.StartReload(UpdateAmmoUI);
             }
         }
     }
 
     private void HandleShooting()
     {
-        // Если оружия нет, или таймер стрельбы еще не прошел — ничего не делаем
+
         if (!hasWeapon || currentWeapon == null || !currentWeapon.CanShoot(nextFireTime)) return;
 
         bool isFiring = Mouse.current.leftButton.isPressed;
 
         if (isFiring)
         {
-            // Передаем управление выстрелом самой пушке.
-            // Она сама создаст пулю, заберет патрон, сыграет нужный звук и вернет задержку (fireRate).
+            // ЕСЛИ ИДЕТ ПЕРЕЗАРЯДКА:
+            if (currentWeapon.IsReloading)
+            {
+                // Если это дробовик и в нем уже есть патроны — прерываем перезарядку для выстрела!
+                if (!currentWeapon.IsMagazineEmpty())
+                {
+                    currentWeapon.TryInterruptReload();
+                }
+                return;
+            }
+
+
+            if (!currentWeapon.CanShoot(nextFireTime)) return;
+
+            // Сам выстрел
             float fireDelay = currentWeapon.Fire(firePoint);
-
-            // Задаем время следующего выстрела
             nextFireTime = Time.time + fireDelay;
-
             UpdateAmmoUI();
         }
     }
@@ -114,31 +120,17 @@ public class Player : MonoBehaviour
 
         // Делегируем задачу добавления патронов пушке
         currentWeapon.AddAmmo();
+        Debug.Log("Добавил патроны");
         UpdateAmmoUI();
     }
 
-    private IEnumerator Reload()
-    {
-        isReloading = true;
-
-        yield return new WaitForSeconds(reloadTime);
-
-        if (currentWeapon != null)
-        {
-            // Пушка сама пересчитает свои патроны в магазине и запасе
-            currentWeapon.ExecuteReload();
-        }
-
-        UpdateAmmoUI();
-        isReloading = false;
-    }
 
     private void FixedUpdate()
     {
         if (GameInput.Instance == null || rb == null) return;
 
         if (isLockedInDialogue) return;
-        
+
         // Поворот
         Vector3 mousePos = GameInput.Instance.GetMousePosition();
         Vector3 direction = mousePos - transform.position;
