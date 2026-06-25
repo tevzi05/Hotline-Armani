@@ -2391,9 +2391,20 @@ MonoBehaviour:
   m_GameObject: {fileID: 519420028}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 86832f84a0cf34eb9b89129d49b7a15e, type: 3}
+  m_Script: {fileID: 11500000, guid: 02106828fbbb6a746bfd8386d307946f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BrewedInk.CRT.CRTCameraBehaviour
+  backgroundColors:
+  - {r: 0, g: 0.47486836, b: 0.78113204, a: 1}
+  - {r: 0.5161381, g: 0, b: 1, a: 1}
+  - {r: 1, g: 0, b: 0.16475868, a: 1}
+  - {r: 1, g: 0.47616363, b: 0, a: 1}
+  - {r: 1, g: 0.8742283, b: 0, a: 1}
+  - {r: 0, g: 0.94117653, b: 0.8705883, a: 1}
+  - {r: 0.9568628, g: 0.6431373, b: 0.3764706, a: 1}
+  - {r: 0.34117648, g: 0.38431373, b: 0.1, a: 1}
+  - {r: 1, g: 0, b: 1, a: 1}
+  changeSpeed: 0.3
 --- !u!1 &537941013
 GameObject:
   m_ObjectHideFlags: 0
