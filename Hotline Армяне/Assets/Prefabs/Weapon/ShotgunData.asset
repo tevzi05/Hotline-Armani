@@ -14,19 +14,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::WeaponData
   weaponName: Shotgun
   bulletPrefab: {fileID: 8217795288768993295, guid: 89fde18eaa53c2543ab9bb3219195fef, type: 3}
-  fireRate: 0.3
+  fireRate: 0.5
   maxAmmo: 2
   maxReserveAmmo: 12
   isShotgun: 1
   pelletsCount: 8
   spreadAngle: 20
+  cocking: {fileID: 8300000, guid: cec0c057262df3648bf08f849d256f84, type: 3}
+  cockingVolume: 0.5
+  reloadTime: 0.5
   ammoPerKill: 1
   weaponOverride: {fileID: 22100000, guid: c50ca2956ab6e37409a51249405ec217, type: 2}
-  shootSound: {fileID: 0}
-  emptySound: {fileID: 0}
-  weaponPickup: {fileID: 0}
-  shootVolume: 0.2
-  emptyVolume: 0.2
-  weaponVolume: 0.2
+  shootSound: {fileID: 8300000, guid: d60c78c008f35e6409451dba2c9f548a, type: 3}
+  emptySound: {fileID: 8300000, guid: f88c92d65edb5be4a93609df9d4ec801, type: 3}
+  weaponPickup: {fileID: 8300000, guid: 9f4cf5a07e349c04dbea6a1f7c3c26b3, type: 3}
+  weaponReloadSound: {fileID: 8300000, guid: 01e92ee7f7174e549949757c0ffa7422, type: 3}
+  shootVolume: 0.7
+  emptyVolume: 0.5
+  weaponVolume: 0.4
+  reloadVolume: 0.7
   minPitch: 0.9
   maxPitch: 1.1
