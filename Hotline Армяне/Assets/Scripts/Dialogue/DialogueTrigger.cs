@@ -3,20 +3,22 @@ using UnityEngine;
 public class DialogueTrigger : MonoBehaviour
 {
     public Dialogue dialogue;
-    private bool playerInRange = false; // Помнит, рядом ли игрок
-
+    private bool playerInRange = false;
+    private bool hasSpoken = false;
     private void Update()
     {
-        // Нажимаем Пробел, только когда игрок РЯДОМ
-        if (playerInRange && Input.GetKeyDown(KeyCode.Space))
+
+        if (!hasSpoken && playerInRange && Input.GetKeyDown(KeyCode.Space))
         {
+
             DialogueManager manager = FindObjectOfType<DialogueManager>();
             if (manager != null)
             {
-  
+
                 if (manager.isDialogueActive == false)
                 {
                     manager.StartDialogue(dialogue);
+                    hasSpoken=true;
                 }
             }
         }
@@ -28,22 +30,6 @@ public class DialogueTrigger : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             playerInRange = true;
-        }
-    }
-
-    // Физическая зона проверки (вышел из круга)
-    public void OnTriggerExit2D(Collider2D other)
-    {
-        if (other.CompareTag("Player"))
-        {
-            playerInRange = false;
-
-            // Если игрок ушел посреди разговора — принудительно закрываем
-            DialogueManager manager = FindObjectOfType<DialogueManager>();
-            if (manager != null)
-            {
-                manager.EndDialogue();
-            }
         }
     }
 }

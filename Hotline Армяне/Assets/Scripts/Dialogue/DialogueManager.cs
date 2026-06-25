@@ -32,7 +32,7 @@ public class DialogueManager : MonoBehaviour
     private void Update()
     {
         // Если диалог открыт и игрок нажимает Пробел или ЛКМ
-        if (boxAnim.GetBool("startOpen") && (Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0)))
+        if (boxAnim.GetBool("startOpen") && Input.GetMouseButtonDown(0))
         {
             if (isTyping)
             {
@@ -107,7 +107,7 @@ public class DialogueManager : MonoBehaviour
         foreach (char letter in sentence.ToCharArray())
         {
             messageText.text += letter;
-            // Стандартное время ожидания между буквами
+
             yield return new WaitForSeconds(textSpeed);
         }
 
@@ -128,6 +128,11 @@ public class DialogueManager : MonoBehaviour
         if (boxAnim != null) boxAnim.SetBool("startOpen", false);
 
         if (activator != null) activator.DialogueEnd();
+
+        if (WaveMusicController.Instance != null)
+        {
+            WaveMusicController.Instance.StartNextWaveMusic(1);
+        }
 
         if (WavesManager.Instance != null)
         {

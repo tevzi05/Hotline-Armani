@@ -8,7 +8,7 @@ public class ZombieAK : Zombie // Наследуемся от базового Zombie
     [SerializeField] private WeaponData weaponData;       // ScriptableObject автомата
     [SerializeField] private Transform firePoint;         // Точка стрельбы
     [SerializeField] private float shootingDistance = 15f; // Дистанция, на которой он останавливается и стреляет
-
+    [SerializeField] private float enemyReloadTime = 1.5f;
     private Weapon enemyWeapon;
     private float nextFireTime = 0f;
     private bool isReloading = false;
@@ -17,12 +17,12 @@ public class ZombieAK : Zombie // Наследуемся от базового Zombie
     {
         base.Start();
 
-        
+
         if (firePoint != null)
-        { 
+        {
             enemyWeapon = firePoint.GetComponent<Weapon>();
 
-            // На всякий случай подстрахуемся, если вдруг забыли повесить
+
             if (enemyWeapon == null)
                 enemyWeapon = firePoint.gameObject.AddComponent<Weapon>();
         }
@@ -33,14 +33,14 @@ public class ZombieAK : Zombie // Наследуемся от базового Zombie
         }
     }
 
-    
+
     protected override void FixedUpdate()
     {
         if (rb == null || player == null) return;
 
         Vector2 lookDirection;
 
-        
+
         if (CanSeePlayer())
         {
             // Смотрим прямо на игрока
@@ -93,6 +93,11 @@ public class ZombieAK : Zombie // Наследуемся от базового Zombie
 
     private void HandleEnemyShooting()
     {
+        if (player == null || !player.gameObject.activeInHierarchy)
+        {
+            if (ai != null) ai.isStopped = false;
+            return;
+        }
         if (!enemyWeapon.CanShoot(nextFireTime)) return;
 
         Player playerScript = player.GetComponent<Player>();
@@ -121,13 +126,9 @@ public class ZombieAK : Zombie // Наследуемся от базового Zombie
         isReloading = true;
         if (ai != null) ai.isStopped = true;
 
-        yield return new WaitForSeconds(1.5f); // Время перезарядки
-
-        if (enemyWeapon != null)
-        {
-            enemyWeapon.ExecuteReload();
-        }
-
+        yield return new WaitForSeconds(enemyReloadTime); // Время перезарядки
+        enemyWeapon.ForceInstantReload();
+        if (ai != null) ai.isStopped = false;
         isReloading = false;
     }
 }

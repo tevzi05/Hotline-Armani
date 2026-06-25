@@ -11,9 +11,14 @@ public class WeaponData : ScriptableObject
 
     // логика дл€ дробовика
     [Header("Shotgun & Spread Settings")]
-    public bool isShotgun = false;       
+    public bool isShotgun = false;
     public int pelletsCount = 5;         // —колько дробинок вылетает за один выстрел
     public float spreadAngle = 15f;      // ”гол разлета дроби в градусах
+    public AudioClip cocking;
+    [Range(0f, 1f)] public float cockingVolume = 0.2f;
+
+    [Header("Reloading")]
+    public float reloadTime = 1.5f;
 
     [Header("Economy")]
     public int ammoPerKill = 5;
@@ -26,9 +31,11 @@ public class WeaponData : ScriptableObject
     public AudioClip shootSound;
     public AudioClip emptySound;
     public AudioClip weaponPickup;
+    public AudioClip weaponReloadSound;
     [Range(0f, 1f)] public float shootVolume = 0.2f;
     [Range(0f, 1f)] public float emptyVolume = 0.2f;
     [Range(0f, 1f)] public float weaponVolume = 0.2f;
+    [Range(0f, 1f)] public float reloadVolume = 0.2f;
     public float minPitch = 0.9f;
     public float maxPitch = 1.1f;
 }

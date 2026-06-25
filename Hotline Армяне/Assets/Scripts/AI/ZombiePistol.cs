@@ -9,6 +9,7 @@ public class ZombiePistol : Zombie
     [SerializeField] private WeaponData weaponData;       // ScriptableObject пистолета
     [SerializeField] private Transform firePoint;         // Точка стрельбы
     [SerializeField] private float shootingDistance = 15f; // Дистанция, на которой он останавливается и стреляет
+    [SerializeField] private float enemyReloadTime = 1.5f;
     private Weapon enemyWeapon;
     private float nextFireTime = 0.4f;
     private bool isReloading = false;
@@ -50,27 +51,34 @@ public class ZombiePistol : Zombie
 
         Vector2 lookDirection;
 
+
         if (CanSeePlayer())
         {
             // Смотрим прямо на игрока
             lookDirection = (Vector2)player.position - rb.position;
-        }
-        else if (ai != null && ai.velocity.sqrMagnitude > 0.1f)
-        {
-            // Смотрим по направлению движения
-            lookDirection = ai.velocity;
+
+            // Запускаем логику дистанции и стрельбы
+            HandleDistanceAndShooting();
         }
         else
         {
-            return;
+            // Если игрока не видим — смотрим по направлению движения
+            if (ai != null && ai.velocity.sqrMagnitude > 0.1f)
+            {
+                lookDirection = ai.velocity;
+            }
+            else
+            {
+                lookDirection = transform.right;
+            }
+
+            // Если потеряли из виду — принудительно заставляем бежать по коридору дальше
+            if (ai != null) ai.isStopped = false;
         }
 
-        // Поворачиваем зомби
+        // Поворачиваем зомби (rotationOffset подтянется из инспектора базового Zombie)
         float angle = Mathf.Atan2(lookDirection.y, lookDirection.x) * Mathf.Rad2Deg;
         rb.MoveRotation(angle + rotationOffset);
-
-        // Логика стрельбы и остановки
-        HandleDistanceAndShooting();
     }
 
     private void HandleDistanceAndShooting()
@@ -99,9 +107,9 @@ public class ZombiePistol : Zombie
     {
         if (!enemyWeapon.CanShoot(nextFireTime)) return;
         Player playerScript = player.GetComponent<Player>();
-        if (playerScript != null && playerScript.IsDead())
+        if (player == null || !player.gameObject.activeInHierarchy)
         {
-            if (ai != null) ai.isStopped = false; 
+            if (ai != null) ai.isStopped = false;
             return;
         }
 
@@ -123,13 +131,9 @@ public class ZombiePistol : Zombie
         isReloading = true;
         if (ai != null) ai.isStopped = true;
 
-        yield return new WaitForSeconds(1.5f); // Время перезарядки
-
-        if (enemyWeapon != null)
-        {
-            enemyWeapon.ExecuteReload();
-        }
-
+        yield return new WaitForSeconds(enemyReloadTime); // Время перезарядки
+        enemyWeapon.ForceInstantReload();
+        if (ai != null) ai.isStopped = false;
         isReloading = false;
     }
     private void OnTriggerStay2D(Collider2D other)

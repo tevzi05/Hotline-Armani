@@ -1,5 +1,4 @@
-using UnityEngine;
-using Unity.Netcode; 
+using UnityEngine; 
 
 public class PlayerAnimation : MonoBehaviour
 {
@@ -8,8 +7,6 @@ public class PlayerAnimation : MonoBehaviour
 
     // Ссылки на оба типа игрока
     private Player singlePlayer;
-    private NetworkPlayer networkPlayer;
-    private NetworkObject networkObject;
 
     private const string IS_RUNNING = "IsRunning";
     private const string HAS_WEAPON = "HasWeapon";
@@ -19,11 +16,6 @@ public class PlayerAnimation : MonoBehaviour
         // Находим скрипты игрока на этом объекте или над ним
         singlePlayer = GetComponentInParent<Player>();
         if (singlePlayer == null) singlePlayer = GetComponentInChildren<Player>();
-
-        networkPlayer = GetComponentInParent<NetworkPlayer>();
-        if (networkPlayer == null) networkPlayer = GetComponentInChildren<NetworkPlayer>();
-
-        networkObject = GetComponentInParent<NetworkObject>();
 
         // Жесткий поиск Аниматора и Спрайта по всей иерархии персонажа
         animator = GetComponent<Animator>();
@@ -42,21 +34,12 @@ public class PlayerAnimation : MonoBehaviour
 
         bool isRunning = false;
         bool hasWeapon = false;
-
-        // Определяем, откуда брать данные анимации (из сингла или мультиплеера)
-        if (networkPlayer != null && networkObject != null && networkObject.IsSpawned)
-        {
-            isRunning = networkPlayer.IsRunning();
-            hasWeapon = networkPlayer.HasWeapon();
-
-            // Поворачиваем лицо к мышке только если это НАШ игрок в сети
-            if (networkObject.IsOwner) AdjustPlayerFacingDirection();
-        }
-        else if (singlePlayer != null)
+        
+        if (singlePlayer != null)
         {
             isRunning = singlePlayer.IsRunning();
             hasWeapon = singlePlayer.HasWeapon();
-            AdjustPlayerFacingDirection(); // В сингле поворачиваем всегда
+            AdjustPlayerFacingDirection();
         }
 
         animator.SetBool(IS_RUNNING, isRunning);
