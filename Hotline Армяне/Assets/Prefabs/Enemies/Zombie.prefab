@@ -49,7 +49,6 @@ GameObject:
   - component: {fileID: -2327946986254164363}
   - component: {fileID: -7739584730145584198}
   - component: {fileID: 7873768121716638871}
-  - component: {fileID: 8195602492427577159}
   m_Layer: 0
   m_Name: Zombie
   m_TagString: Untagged
@@ -343,15 +342,3 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &8195602492427577159
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5823619398447558353}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cba45a7e704ef414b9f8d7a81ee9db27, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ZombieAnimation
