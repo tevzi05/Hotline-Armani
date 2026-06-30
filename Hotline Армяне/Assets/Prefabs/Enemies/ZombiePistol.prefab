@@ -602,5 +602,5 @@ MonoBehaviour:
     m_Bits: 256
   weaponData: {fileID: 11400000, guid: 0e93053f1da837542bac7618d2a1ec17, type: 2}
   firePoint: {fileID: 1223492950224543980}
-  shootingDistance: 10
+  shootingDistance: 12
   enemyReloadTime: 1.5
