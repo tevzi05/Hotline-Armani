@@ -280,6 +280,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 590935628}
+  - {fileID: 924452495}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &137820000
@@ -3747,7 +3748,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 9.7, y: -8.674995}
+  m_AnchoredPosition: {x: 0, y: -8.674995}
   m_SizeDelta: {x: 196.28, y: 35.03}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &865658106
@@ -3770,7 +3771,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: TALK WITH <color=#00FF00>VITEK</color>
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 745a6617eff0e9b4a9fdc50cc87bda7f, type: 2}
   m_sharedMaterial: {fileID: 1584023967562410138, guid: 745a6617eff0e9b4a9fdc50cc87bda7f, type: 2}
@@ -3804,7 +3805,7 @@ MonoBehaviour:
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
-  m_HorizontalAlignment: 1
+  m_HorizontalAlignment: 2
   m_VerticalAlignment: 256
   m_textAlignment: 65535
   m_characterSpacing: 0
@@ -4054,6 +4055,76 @@ Transform:
   - {fileID: 3776561844507200858}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &924452494
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 127302311}
+    m_Modifications:
+    - target: {fileID: 1509427459503406337, guid: 6f03325533961b84890311b9bc0bebca, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.8000001
+      objectReference: {fileID: 0}
+    - target: {fileID: 1509427459503406337, guid: 6f03325533961b84890311b9bc0bebca, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.8000001
+      objectReference: {fileID: 0}
+    - target: {fileID: 1509427459503406337, guid: 6f03325533961b84890311b9bc0bebca, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -27.4307
+      objectReference: {fileID: 0}
+    - target: {fileID: 1509427459503406337, guid: 6f03325533961b84890311b9bc0bebca, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 35.03799
+      objectReference: {fileID: 0}
+    - target: {fileID: 1509427459503406337, guid: 6f03325533961b84890311b9bc0bebca, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1509427459503406337, guid: 6f03325533961b84890311b9bc0bebca, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: -0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 1509427459503406337, guid: 6f03325533961b84890311b9bc0bebca, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1509427459503406337, guid: 6f03325533961b84890311b9bc0bebca, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1509427459503406337, guid: 6f03325533961b84890311b9bc0bebca, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 1509427459503406337, guid: 6f03325533961b84890311b9bc0bebca, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1509427459503406337, guid: 6f03325533961b84890311b9bc0bebca, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1509427459503406337, guid: 6f03325533961b84890311b9bc0bebca, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 270
+      objectReference: {fileID: 0}
+    - target: {fileID: 5823619398447558353, guid: 6f03325533961b84890311b9bc0bebca, type: 3}
+      propertyPath: m_Name
+      value: Alfons
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 6f03325533961b84890311b9bc0bebca, type: 3}
+--- !u!4 &924452495 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1509427459503406337, guid: 6f03325533961b84890311b9bc0bebca, type: 3}
+  m_PrefabInstance: {fileID: 924452494}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &925043584
 GameObject:
   m_ObjectHideFlags: 0
@@ -18209,6 +18280,7 @@ GameObject:
   - component: {fileID: 1784671993}
   - component: {fileID: 1784671995}
   - component: {fileID: 1784671994}
+  - component: {fileID: 1784671996}
   m_Layer: 5
   m_Name: Background
   m_TagString: Untagged
@@ -18233,8 +18305,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -190.06}
-  m_SizeDelta: {x: 187.79, y: 52.38}
+  m_AnchoredPosition: {x: 19, y: -190.06}
+  m_SizeDelta: {x: 226, y: 52.38}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1784671994
 MonoBehaviour:
@@ -18274,6 +18346,22 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1784671992}
   m_CullTransparentMesh: 1
+--- !u!114 &1784671996
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1784671992}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5414944ae0abebe47ac304dc2307745c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ObjectivesManager
+  objectiveText: {fileID: 865658106}
+  objectivesList:
+  - TALK WITH <color=#00FF00>VITEK</color>
+  - FOLLOW <color=#00FF00>VITEK</color>
 --- !u!1 &1790988852
 GameObject:
   m_ObjectHideFlags: 0
@@ -19069,13 +19157,116 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 127302311}
     m_Modifications:
+    - target: {fileID: 271724096010074952, guid: 204c9bcfb22d91c4fa7e44c25a674450, type: 3}
+      propertyPath: currentStageIndex
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 271724096010074952, guid: 204c9bcfb22d91c4fa7e44c25a674450, type: 3}
+      propertyPath: dialogueStages.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 271724096010074952, guid: 204c9bcfb22d91c4fa7e44c25a674450, type: 3}
+      propertyPath: dialogueStages.Array.data[0].dialogueID
+      value: "\u0412\u0441\u0442\u0440\u0435\u0447\u0430"
+      objectReference: {fileID: 0}
+    - target: {fileID: 271724096010074952, guid: 204c9bcfb22d91c4fa7e44c25a674450, type: 3}
+      propertyPath: dialogueStages.Array.data[1].dialogueID
+      value: "\u0423_\u041E\u0431\u044A\u0435\u043A\u0442\u0430"
+      objectReference: {fileID: 0}
+    - target: {fileID: 271724096010074952, guid: 204c9bcfb22d91c4fa7e44c25a674450, type: 3}
+      propertyPath: dialogueStages.Array.data[0].lines.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 271724096010074952, guid: 204c9bcfb22d91c4fa7e44c25a674450, type: 3}
+      propertyPath: dialogueStages.Array.data[1].lines.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 271724096010074952, guid: 204c9bcfb22d91c4fa7e44c25a674450, type: 3}
+      propertyPath: dialogueStages.Array.data[0].lines.Array.data[0].text
+      value: <color=#8400FF>Jaketka</color>, YO. Why are you taking so long? Well,
+        I get payed anyway, so...
+      objectReference: {fileID: 0}
+    - target: {fileID: 271724096010074952, guid: 204c9bcfb22d91c4fa7e44c25a674450, type: 3}
+      propertyPath: dialogueStages.Array.data[0].lines.Array.data[1].text
+      value: ...
+      objectReference: {fileID: 0}
+    - target: {fileID: 271724096010074952, guid: 204c9bcfb22d91c4fa7e44c25a674450, type: 3}
+      propertyPath: dialogueStages.Array.data[0].lines.Array.data[2].text
+      value: Ok, ok, I get it. Let's not forget that we are on the mission to get
+        <color=#FF002A>Jeff's files</color>
+      objectReference: {fileID: 0}
+    - target: {fileID: 271724096010074952, guid: 204c9bcfb22d91c4fa7e44c25a674450, type: 3}
+      propertyPath: dialogueStages.Array.data[0].lines.Array.data[3].text
+      value: Let's move then
+      objectReference: {fileID: 0}
+    - target: {fileID: 271724096010074952, guid: 204c9bcfb22d91c4fa7e44c25a674450, type: 3}
+      propertyPath: dialogueStages.Array.data[1].lines.Array.data[0].text
+      value: Ok, I need some time to make some magic. Jeff's PDF's are here 100%,
+        but I need to crank this password
+      objectReference: {fileID: 0}
+    - target: {fileID: 271724096010074952, guid: 204c9bcfb22d91c4fa7e44c25a674450, type: 3}
+      propertyPath: dialogueStages.Array.data[1].lines.Array.data[1].text
+      value: OH SHIT, I THINK WE HAVE GUESTS
+      objectReference: {fileID: 0}
+    - target: {fileID: 271724096010074952, guid: 204c9bcfb22d91c4fa7e44c25a674450, type: 3}
+      propertyPath: dialogueStages.Array.data[1].lines.Array.data[2].text
+      value: TAKE YOUR <color=#FF002A>GUN</color> AND <color=#FFDF00>DEFEND ME</color>
+      objectReference: {fileID: 0}
+    - target: {fileID: 271724096010074952, guid: 204c9bcfb22d91c4fa7e44c25a674450, type: 3}
+      propertyPath: dialogueStages.Array.data[1].lines.Array.data[3].text
+      value: Holy shit....
+      objectReference: {fileID: 0}
+    - target: {fileID: 271724096010074952, guid: 204c9bcfb22d91c4fa7e44c25a674450, type: 3}
+      propertyPath: dialogueStages.Array.data[0].lines.Array.data[0].speakerName
+      value: Vitek
+      objectReference: {fileID: 0}
+    - target: {fileID: 271724096010074952, guid: 204c9bcfb22d91c4fa7e44c25a674450, type: 3}
+      propertyPath: dialogueStages.Array.data[0].lines.Array.data[1].speakerName
+      value: <color=#8400FF>Jaketka</color>
+      objectReference: {fileID: 0}
+    - target: {fileID: 271724096010074952, guid: 204c9bcfb22d91c4fa7e44c25a674450, type: 3}
+      propertyPath: dialogueStages.Array.data[0].lines.Array.data[2].speakerName
+      value: Vitek
+      objectReference: {fileID: 0}
+    - target: {fileID: 271724096010074952, guid: 204c9bcfb22d91c4fa7e44c25a674450, type: 3}
+      propertyPath: dialogueStages.Array.data[0].lines.Array.data[3].speakerName
+      value: <color=#8400FF>Jaketka</color>
+      objectReference: {fileID: 0}
+    - target: {fileID: 271724096010074952, guid: 204c9bcfb22d91c4fa7e44c25a674450, type: 3}
+      propertyPath: dialogueStages.Array.data[1].lines.Array.data[0].speakerName
+      value: Vitek
+      objectReference: {fileID: 0}
+    - target: {fileID: 271724096010074952, guid: 204c9bcfb22d91c4fa7e44c25a674450, type: 3}
+      propertyPath: dialogueStages.Array.data[1].lines.Array.data[1].speakerName
+      value: Vitek
+      objectReference: {fileID: 0}
+    - target: {fileID: 271724096010074952, guid: 204c9bcfb22d91c4fa7e44c25a674450, type: 3}
+      propertyPath: dialogueStages.Array.data[1].lines.Array.data[2].speakerName
+      value: Vitek
+      objectReference: {fileID: 0}
+    - target: {fileID: 271724096010074952, guid: 204c9bcfb22d91c4fa7e44c25a674450, type: 3}
+      propertyPath: dialogueStages.Array.data[1].lines.Array.data[3].speakerName
+      value: <color=#8400FF>Jaketka</color>
+      objectReference: {fileID: 0}
+    - target: {fileID: 271724096010074952, guid: 204c9bcfb22d91c4fa7e44c25a674450, type: 3}
+      propertyPath: dialogueStages.Array.data[0].lines.Array.data[1].triggerNextObjectiveAfterThisLine
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 271724096010074952, guid: 204c9bcfb22d91c4fa7e44c25a674450, type: 3}
+      propertyPath: dialogueStages.Array.data[0].lines.Array.data[2].triggerNextObjectiveAfterThisLine
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 271724096010074952, guid: 204c9bcfb22d91c4fa7e44c25a674450, type: 3}
+      propertyPath: dialogueStages.Array.data[0].lines.Array.data[3].triggerNextObjectiveAfterThisLine
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1509427459503406337, guid: 204c9bcfb22d91c4fa7e44c25a674450, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -27.51
+      value: 7.1399994
       objectReference: {fileID: 0}
     - target: {fileID: 1509427459503406337, guid: 204c9bcfb22d91c4fa7e44c25a674450, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 29.37
+      value: 4.43
       objectReference: {fileID: 0}
     - target: {fileID: 1509427459503406337, guid: 204c9bcfb22d91c4fa7e44c25a674450, type: 3}
       propertyPath: m_LocalPosition.z
@@ -19083,11 +19274,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1509427459503406337, guid: 204c9bcfb22d91c4fa7e44c25a674450, type: 3}
       propertyPath: m_LocalRotation.w
-      value: -0.9999971
+      value: -0.7071068
       objectReference: {fileID: 0}
     - target: {fileID: 1509427459503406337, guid: 204c9bcfb22d91c4fa7e44c25a674450, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1509427459503406337, guid: 204c9bcfb22d91c4fa7e44c25a674450, type: 3}
       propertyPath: m_LocalRotation.y
@@ -19095,7 +19286,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1509427459503406337, guid: 204c9bcfb22d91c4fa7e44c25a674450, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.002414559
+      value: 0.7071068
       objectReference: {fileID: 0}
     - target: {fileID: 1509427459503406337, guid: 204c9bcfb22d91c4fa7e44c25a674450, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -19107,11 +19298,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1509427459503406337, guid: 204c9bcfb22d91c4fa7e44c25a674450, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 360.277
+      value: 270
       objectReference: {fileID: 0}
+    - target: {fileID: 1586284778774556858, guid: 204c9bcfb22d91c4fa7e44c25a674450, type: 3}
+      propertyPath: target
+      value: 
+      objectReference: {fileID: 924452495}
     - target: {fileID: 5823619398447558353, guid: 204c9bcfb22d91c4fa7e44c25a674450, type: 3}
       propertyPath: m_Name
       value: Arthas
+      objectReference: {fileID: 0}
+    - target: {fileID: 8542247350071510955, guid: 204c9bcfb22d91c4fa7e44c25a674450, type: 3}
+      propertyPath: maxSpeed
+      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -20227,6 +20426,14 @@ PrefabInstance:
       propertyPath: reloadText
       value: 
       objectReference: {fileID: 898726956}
+    - target: {fileID: 315624191890663831, guid: ef646ee5521ced74e8dccfc4cffc83f3, type: 3}
+      propertyPath: m_IsTrigger
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 392900478783139819, guid: ef646ee5521ced74e8dccfc4cffc83f3, type: 3}
+      propertyPath: m_SleepingMode
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1697910443743667081, guid: ef646ee5521ced74e8dccfc4cffc83f3, type: 3}
       propertyPath: m_Name
       value: Player

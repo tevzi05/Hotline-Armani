@@ -63,7 +63,7 @@ public class Player : MonoBehaviour
             }
         }
     }
-
+    // СТРЭЛЬБА
     private void HandleShooting()
     {
 
@@ -94,6 +94,7 @@ public class Player : MonoBehaviour
         }
     }
 
+    // ЭКИПИРОВКА ОРУЖИЯ
     public void EquipWeapon(WeaponData newData)
     {
         if (newData == null) return;
@@ -114,6 +115,7 @@ public class Player : MonoBehaviour
         UpdateAmmoUI();
     }
 
+    // ДОБАВЛЕНИЕ ПАТРОНОВ
     public void AddAmmo()
     {
         if (!hasWeapon || currentWeapon == null) return;
@@ -124,7 +126,7 @@ public class Player : MonoBehaviour
         UpdateAmmoUI();
     }
 
-
+    // ОБНОВЛЕНИЕ ДВИЖЕНИЙ
     private void FixedUpdate()
     {
         if (GameInput.Instance == null || rb == null) return;
@@ -144,6 +146,7 @@ public class Player : MonoBehaviour
         isRunning = moveDirection.magnitude > 0.1f;
     }
 
+    // ПОВОРОТ ТОЧКИ СТРЕЛЬБЫ В СТОРОНУ МЫШКИ
     private void LateUpdate()
     {
 
@@ -158,6 +161,7 @@ public class Player : MonoBehaviour
 
     }
 
+    // ОБНОВЛЕНИЕ UI ПАТРОНОВ
     private void UpdateAmmoUI()
     {
         if (ammoText == null) return;
@@ -189,6 +193,7 @@ public class Player : MonoBehaviour
     public bool IsDead() => currentHealth <= 0;
     public bool IsRunning() => isRunning;
 
+    // ОБРАБОТКА ПОЛУЧЕНИЯ УРОНА
     public void TakeDamage(int damage)
     {
         currentHealth -= damage;
@@ -204,16 +209,16 @@ public class Player : MonoBehaviour
         gameObject.SetActive(false);
     }
 
+    // БЛОКИРОВАНИЕ ВО ВРЕМЯ ДИАЛОГА
     public void SetDialogueLock(bool lockState)
     {
         isLockedInDialogue = lockState;
 
         if (lockState)
         {
-            // Если заблокировали — мгновенно сбрасываем скорость, чтобы игрок не скользил по инерции
+            
             if (rb != null) rb.linearVelocity = Vector2.zero;
             isRunning = false;
         }
     }
-
 }

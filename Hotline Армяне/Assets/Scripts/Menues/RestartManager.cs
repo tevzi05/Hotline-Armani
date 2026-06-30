@@ -13,29 +13,37 @@ public class RestartManager : MonoBehaviour
     private bool isPlayerDead = false;
     private GameObject crosshair;
 
+    // Переменные для чекпоинтов
+    private Vector3 lastCheckpointPosition;
+    private bool hasCheckpoint = false;
+    private GameObject player;
+
     public static RestartManager Instance { get; private set; }
 
     private void Awake()
     {
         if (Instance == null) Instance = this;
-        if (MusicController.Instance != null)
-        {
-            MusicController.Instance.ResetEffects();
-        }
-        // Находим родителя (плашку) один раз при старте
+        if (MusicController.Instance != null) MusicController.Instance.ResetEffects();
         if (deathText != null)
         {
             deathPanel = deathText.transform.parent.gameObject;
-            deathPanel.SetActive(false); // Выключаем при старте
+            deathPanel.SetActive(false); 
         }
         currentPoints = 0;
         UpdatePtsUI();
+        player = GameObject.FindGameObjectWithTag("Player");
     }
 
     public void AddPoints(int amount)
     {
         currentPoints += amount; // Прибавляем
         UpdatePtsUI(); // Обновляем текст
+    }
+
+    public void SetCheckpoint(Vector3 position)
+    {
+        lastCheckpointPosition = position;
+        hasCheckpoint = true;
     }
 
     private void UpdatePtsUI()
@@ -62,8 +70,28 @@ public class RestartManager : MonoBehaviour
     {
         if (isPlayerDead && Input.GetKeyDown(KeyCode.R))
         {
-            // Важно: если менял Time.timeScale, здесь его надо вернуть в 1
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            if (hasCheckpoint && player != null)
+            {
+                RespawnAtCheckpoint();
+            }
+            else
+            {
+                // Если чекпоинта еще не было, перезапускаем сцену полностью
+                SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            }
         }
+    }
+
+    private void RespawnAtCheckpoint()
+    {
+        isPlayerDead = false;
+
+        // Перемещаемся на точку чекпоинта
+        player.transform.position = lastCheckpointPosition;
+
+        if (deathPanel != null) deathPanel.SetActive(false);
+        if (crosshair != null) crosshair.SetActive(true);
+        if (MusicController.Instance != null) MusicController.Instance.ResetEffects();
+
     }
 }

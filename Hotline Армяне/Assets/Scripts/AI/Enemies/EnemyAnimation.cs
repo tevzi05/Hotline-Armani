@@ -1,5 +1,5 @@
-using UnityEngine;
 using Pathfinding;
+using UnityEngine;
 
 public class ZombieAnimation : MonoBehaviour
 {
@@ -17,12 +17,8 @@ public class ZombieAnimation : MonoBehaviour
     private void Update()
     {
         if (animator == null || ai == null) return;
-
-        // Проверяем, движется ли зомби прямо сейчас
-        // sqrMagnitude > 0.1f значит, что скорость больше нуля
         bool isMoving = ai.velocity.sqrMagnitude > 0.1f;
 
-        // Передаем состояние в аниматор
         animator.SetBool(IS_RUNNING, isMoving);
     }
 }

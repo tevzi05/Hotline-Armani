@@ -6,74 +6,62 @@ using TMPro;
 public class DialogueManager : MonoBehaviour
 {
     [Header("UI Элементы (TextMeshPro)")]
-    public TextMeshProUGUI messageText; // Текст самой реплики
-    public TextMeshProUGUI nameText;    // Текст имени
+    public TextMeshProUGUI messageText;
+    public TextMeshProUGUI nameText;
 
     [Header("Активатор интерфейса")]
     public DialogueActivator activator;
 
     [HideInInspector] public bool isDialogueActive = false;
-
     public Animator boxAnim;
     [SerializeField] private float textSpeed = 0.03f;
 
-    private Queue<string> sentences;
+    private Queue<DialogueLine> dialogueLines;
     private bool isTyping = false;
     private string currentCompleteSentence = "";
 
-    private GameObject objective;
+    private DialogueTrigger currentTrigger; // Ссылка на триггер, который запустил диалог
+    private NPCMovementController currentTalkingBot;
 
     private void Start()
     {
-        sentences = new Queue<string>();
-        objective = GameObject.FindGameObjectWithTag("Objective");
+        dialogueLines = new Queue<DialogueLine>();
     }
 
     private void Update()
     {
-        // Если диалог открыт и игрок нажимает Пробел или ЛКМ
         if (boxAnim.GetBool("startOpen") && Input.GetMouseButtonDown(0))
         {
             if (isTyping)
             {
-                // Если текст еще печатается — мгновенно показываем его целиком
                 StopAllCoroutines();
                 messageText.text = currentCompleteSentence;
                 isTyping = false;
             }
             else
             {
-                // Иначе листаем к следующей строчке
                 DisplayNextSentence();
             }
         }
     }
 
-    public void StartDialogue(Dialogue dialogue)
+    // Принимает Dialogue, DialogueTrigger и контроллер
+    public void StartDialogue(Dialogue dialogue, DialogueTrigger trigger, NPCMovementController npc = null)
     {
         isDialogueActive = true;
+        currentTrigger = trigger;
+        currentTalkingBot = npc;
 
-        if (Player.Instance != null)
-        {
-            Player.Instance.SetDialogueLock(true);
-        }
-
+        if (Player.Instance != null) Player.Instance.SetDialogueLock(true);
         if (activator != null) activator.DialogueStart();
+        if (boxAnim != null) boxAnim.SetBool("startOpen", true);
 
-        if (boxAnim != null)
+        dialogueLines.Clear();
+
+        // Заполняем очередь структурами реплик
+        foreach (DialogueLine line in dialogue.lines)
         {
-            boxAnim.SetBool("startOpen", true);
-        }
-        boxAnim.SetBool("startOpen", true);
-
-        nameText.text = dialogue.name;
-        messageText.text = ""; // Очищаем поле реплики перед стартом
-
-        sentences.Clear();
-
-        foreach (string sentence in dialogue.sentences)
-        {
-            sentences.Enqueue(sentence);
+            dialogueLines.Enqueue(line);
         }
 
         StopAllCoroutines();
@@ -88,15 +76,30 @@ public class DialogueManager : MonoBehaviour
 
     public void DisplayNextSentence()
     {
-        if (sentences.Count == 0)
+        if (dialogueLines.Count == 0)
         {
             EndDialogue();
             return;
         }
-        string sentence = sentences.Dequeue();
-        currentCompleteSentence = sentence;
+
+        // Достаем из очереди целую линию
+        DialogueLine currentLine = dialogueLines.Dequeue();
+
+        
+        nameText.text = currentLine.speakerName;
+
+        currentCompleteSentence = currentLine.text;
+
+        if (currentLine.triggerNextObjectiveAfterThisLine)
+        {
+            if (ObjectivesManager.Instance != null)
+            {
+                ObjectivesManager.Instance.CompleteCurrentObjective();
+            }
+        }
+
         StopAllCoroutines();
-        StartCoroutine(TypeSentence(sentence));
+        StartCoroutine(TypeSentence(currentCompleteSentence));
     }
 
     IEnumerator TypeSentence(string sentence)
@@ -107,7 +110,6 @@ public class DialogueManager : MonoBehaviour
         foreach (char letter in sentence.ToCharArray())
         {
             messageText.text += letter;
-
             yield return new WaitForSeconds(textSpeed);
         }
 
@@ -120,24 +122,18 @@ public class DialogueManager : MonoBehaviour
         messageText.text = "";
         nameText.text = "";
 
-        if (Player.Instance != null)
-        {
-            Player.Instance.SetDialogueLock(false);
-        }
-
+        if (Player.Instance != null) Player.Instance.SetDialogueLock(false);
         if (boxAnim != null) boxAnim.SetBool("startOpen", false);
-
         if (activator != null) activator.DialogueEnd();
 
-        if (WaveMusicController.Instance != null)
+        // Оповещаем триггер, что этот конкретный диалог завершен
+        if (currentTrigger != null)
         {
-            WaveMusicController.Instance.StartNextWaveMusic(1);
+            currentTrigger.OnCurrentDialogueEnded();
+            currentTrigger = null;
+
         }
 
-        if (WavesManager.Instance != null)
-        {
-            WavesManager.Instance.StartSurvivalMode();
-        }
-        if (objective != null) objective.SetActive(false);
+        currentTalkingBot = null;
     }
 }

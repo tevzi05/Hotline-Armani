@@ -23,7 +23,7 @@ MonoBehaviour:
   cocking: {fileID: 0}
   cockingVolume: 0.2
   reloadTime: 1.5
-  ammoPerKill: 10
+  ammoPerKill: 3
   weaponOverride: {fileID: 9100000, guid: 4844a8379cd7c134b966a8acb227058b, type: 2}
   shootSound: {fileID: 8300000, guid: 7145719ef79945d43b09cab5160f570f, type: 3}
   emptySound: {fileID: 8300000, guid: 54d8a473fdad0074aa61b8c32a5e56f7, type: 3}
