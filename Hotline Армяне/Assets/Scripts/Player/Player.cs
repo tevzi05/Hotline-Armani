@@ -62,6 +62,10 @@ public class Player : MonoBehaviour
                 currentWeapon.StartReload(UpdateAmmoUI);
             }
         }
+        if(currentWeapon != null && currentWeapon.IsMagazineEmpty())
+        {
+            currentWeapon.StartReload(UpdateAmmoUI);
+        }
     }
     // —“–ЁЋ№Ѕј
     private void HandleShooting()
@@ -77,7 +81,7 @@ public class Player : MonoBehaviour
             if (currentWeapon.IsReloading)
             {
                 // ≈сли это дробовик и в нем уже есть патроны Ч прерываем перезар€дку дл€ выстрела!
-                if (!currentWeapon.IsMagazineEmpty())
+                if (!currentWeapon.IsMagazineLowOnAmmo())
                 {
                     currentWeapon.TryInterruptReload();
                 }
@@ -176,11 +180,10 @@ public class Player : MonoBehaviour
             ammoText.text = currentWeapon.GetAmmoText();
 
             // ѕровер€ем, кончились ли патроны совсем
-            if (currentWeapon.IsOutofAmmo())
-                ammoText.text = "No ammo!";
+            if (currentWeapon.IsOutofAmmo()) ammoText.text = "No ammo!";
 
             // ¬ключаем плашку перезар€дки, если магазин пуст
-            backgroundReload.SetActive(currentWeapon.IsMagazineEmpty());
+            backgroundReload.SetActive(currentWeapon.IsMagazineLowOnAmmo());
         }
         else
         {
