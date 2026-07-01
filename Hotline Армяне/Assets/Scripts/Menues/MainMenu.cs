@@ -4,12 +4,19 @@ using UnityEngine.SceneManagement;
 public class MainMenu : MonoBehaviour
 {
     public GameObject mainMenu;
-    public GameObject levelSelectPanel;
-    public void ChooseLevel()
-   {
+    public GameObject levelSelectPanelSolo;
+    public GameObject levelSelectPanelExtraction;
+    public void ChooseLevelSolo()
+    {
         mainMenu.SetActive(false);
-        levelSelectPanel.SetActive(true);
+        levelSelectPanelSolo.SetActive(true);
 
+    }
+
+    public void ChooseLevelExtraction()
+    {
+        mainMenu.SetActive(false);
+        levelSelectPanelExtraction.SetActive(true);
     }
 
     public void Extraction()
