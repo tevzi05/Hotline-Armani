@@ -189,7 +189,7 @@ public class WavesManager : MonoBehaviour
         int seconds = Mathf.FloorToInt(survivalTimer % 60f);
         string timeString = string.Format("{0:00}:{1:00}", minutes, seconds);
 
-        if (finalScoreContainer != null) finalScoreContainer.SetActive(false);
+        if (finalScoreContainer != null) finalScoreContainer.SetActive(true);
         if (isVictory)
         {
             if (victoryPanel != null) victoryPanel.SetActive(true);
@@ -212,8 +212,10 @@ public class WavesManager : MonoBehaviour
             if (defTimeText != null) defTimeText.text = $"TIME: {timeString}";
             if (defPointsText != null) defPointsText.text = $"TOTAL POINTS: {finalPoints}";
         }
-
-        // ¬ключаем курсор, чтобы игрок мог нажать кнопки Exit и Restart
+        Time.timeScale = 0f;
+        crosshair = GameObject.FindGameObjectWithTag("Crosshair");
+        if (crosshair != null) crosshair.SetActive(false);
+        Cursor.visible = true;
         
     }
 }

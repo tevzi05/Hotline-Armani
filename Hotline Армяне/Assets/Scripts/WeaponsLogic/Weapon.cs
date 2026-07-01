@@ -197,5 +197,6 @@ public class Weapon : MonoBehaviour
 
     public string GetAmmoText() => $"{currentAmmo}/{ammoReserve}";
     public bool IsOutofAmmo() => ammoReserve == 0 && currentAmmo == 0;
+    public bool IsMagazineLowOnAmmo() => currentAmmo <= magazineSize / 3;
     public bool IsMagazineEmpty() => currentAmmo == 0;
 }
